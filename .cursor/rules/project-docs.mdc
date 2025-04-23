@@ -1,0 +1,10 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+nitro modules docs: https://raw.githubusercontent.com/mrousavy/nitro/refs/heads/main/docs/static/llms.txt
+
+cloud payments ios sdk: https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios/-/raw/master/README.md?ref_type=heads
+
+cloud payments android sdk: https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-android/-/raw/master/README.md

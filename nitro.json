@@ -1,0 +1,18 @@
+{
+  "$schema": "https://nitro.margelo.com/nitro.schema.json",
+  "cxxNamespace": ["cloudpayments"],
+  "ios": {
+    "iosModuleName": "NitroCloudPayments"
+  },
+  "android": {
+    "androidNamespace": ["cloudpayments"],
+    "androidCxxLibName": "NitroCloudPayments"
+  },
+  "autolinking": {
+    "CloudPayments": {
+      "swift": "HybridCloudPayments",
+      "kotlin": "HybridCloudPayments"
+    }
+  },
+  "ignorePaths": ["**/node_modules"]
+}

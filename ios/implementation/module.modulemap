@@ -1,0 +1,4 @@
+module WebKitModule {
+    header "WebKitImport.h"
+    export *
+}
