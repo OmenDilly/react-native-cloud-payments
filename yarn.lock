@@ -1337,6 +1337,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@omendilly/react-native-cloud-payments@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@omendilly/react-native-cloud-payments@workspace:."
+  dependencies:
+    "@react-native/eslint-config": 0.78.0
+    "@types/jest": ^29.5.12
+    "@types/react": ^19.0.6
+    eslint: ^8.57.0
+    eslint-config-prettier: ^9.1.0
+    eslint-plugin-prettier: ^5.2.1
+    nitro-codegen: "*"
+    prettier: ^3.3.3
+    react: 19.0.0
+    react-native: 0.78.0
+    react-native-nitro-modules: "*"
+    react-native-webview: ^13.13.5
+    typescript: ^5.5.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-nitro-modules: "*"
+    react-native-webview: ">=11.0.0"
+  languageName: unknown
+  linkType: soft
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -5895,31 +5920,6 @@ __metadata:
   checksum: e20fe84c86ff172fc8d898251b7cc2c43645d108bf96d0b8edf39b98f9a2cae97b40520ee7ed8ee0085ccc94736c4886294456033304151c3f94978cec03df21
   languageName: node
   linkType: hard
-
-"react-native-cloud-payments@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "react-native-cloud-payments@workspace:."
-  dependencies:
-    "@react-native/eslint-config": 0.78.0
-    "@types/jest": ^29.5.12
-    "@types/react": ^19.0.6
-    eslint: ^8.57.0
-    eslint-config-prettier: ^9.1.0
-    eslint-plugin-prettier: ^5.2.1
-    nitro-codegen: "*"
-    prettier: ^3.3.3
-    react: 19.0.0
-    react-native: 0.78.0
-    react-native-nitro-modules: "*"
-    react-native-webview: ^13.13.5
-    typescript: ^5.5.4
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-    react-native-nitro-modules: "*"
-    react-native-webview: ">=11.0.0"
-  languageName: unknown
-  linkType: soft
 
 "react-native-nitro-modules@npm:*, react-native-nitro-modules@npm:^0.25.2":
   version: 0.25.2

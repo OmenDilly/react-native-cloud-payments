@@ -4,9 +4,12 @@ import BottomSheet, {
   BottomSheetView,
 } from '@gorhom/bottom-sheet'
 import { Portal } from '@gorhom/portal'
+import {
+  ThreeDSecureView,
+  type ThreeDsResult,
+} from '@omendilly/react-native-cloud-payments'
 import React, { useRef } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
-import { ThreeDSecureView, type ThreeDsResult } from '../../src'
 
 // Define the expected structure for the 3DS data prop
 interface ThreeDsData {
