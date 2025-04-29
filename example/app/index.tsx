@@ -1,6 +1,8 @@
+import ThreeDSecureSheet from '@/components/ThreeDSecureSheet'
+import { PortalProvider } from '@gorhom/portal'
 import {
   CloudPaymentsModule,
-  ThreeDsParams,
+  ThreeDsData,
 } from '@omendilly/react-native-cloud-payments'
 import React, { useState } from 'react'
 import {
@@ -14,17 +16,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+// import WebView from 'react-native-webview'
 
 const App = () => {
-  const [publicId, setPublicId] = useState('pk_68af42d685b66be4ea9ae09ce23e4')
-  const [cardNumber, setCardNumber] = useState('4111111111111111')
+  const [publicId, setPublicId] = useState(process.env.EXPO_PUBLIC_CP_PUBLIC_ID)
+  const [cardNumber, setCardNumber] = useState('4242 4242 4242 4242')
   const [expDate, setExpDate] = useState('12/25')
   const [cvv, setCvv] = useState('123')
-
-  // 3DS params
-  const [transactionId, setTransactionId] = useState('')
-  const [paReq, setPaReq] = useState('')
-  const [acsUrl, setAcsUrl] = useState('')
 
   // Charge params
   const [amount, setAmount] = useState('1.00')
@@ -85,6 +84,8 @@ const App = () => {
     }
   }
 
+  const [threeDsData, setThreeDsData] = useState<ThreeDsData | null>(null)
+
   const validateExpDate = async () => {
     try {
       setLoading(true)
@@ -92,48 +93,6 @@ const App = () => {
       setResult(`Expiration date is ${isValid ? 'valid' : 'invalid'}`)
     } catch (error: any) {
       Alert.alert('Validation Error', error.message)
-      setResult(`Error: ${error.message}`)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Process 3DS authentication
-  const process3ds = async (params: ThreeDsParams) => {
-    if (!initialized) {
-      Alert.alert('Error', 'Please initialize first')
-      return
-    }
-
-    if (!params.transactionId || !params.paReq || !params.acsUrl) {
-      Alert.alert('Error', 'Please fill all the fields')
-      return
-    }
-
-    try {
-      console.log('process3ds: ', params)
-      setLoading(true)
-      const threeDsResult = await CloudPaymentsModule.show3ds(params)
-      setResult(
-        `3DS Result:\nTransaction ID: ${threeDsResult.transactionId}\nSuccess: ${
-          threeDsResult.success ? 'Yes' : 'No'
-        }\nPaRes: ${threeDsResult.paRes.substring(0, 30)}...`
-      )
-
-      console.log('3ds result: ', threeDsResult)
-
-      // Optionally finish the 3DS process
-      if (threeDsResult.success) {
-        const finishResult = await CloudPaymentsModule.finish3ds(
-          threeDsResult.transactionId
-        )
-        setResult(
-          (prev) =>
-            `${prev}\n\nFinish 3DS: ${finishResult ? 'Success' : 'Failed'}`
-        )
-      }
-    } catch (error: any) {
-      Alert.alert('3DS Error', error.message)
       setResult(`Error: ${error.message}`)
     } finally {
       setLoading(false)
@@ -177,11 +136,6 @@ const App = () => {
         !!chargeResult.paReq &&
         !!chargeResult.acsUrl
       ) {
-        // Auto-fill 3DS fields
-        setTransactionId(chargeResult.transactionId)
-        setPaReq(chargeResult.paReq)
-        setAcsUrl(chargeResult.acsUrl)
-
         Alert.alert(
           '3DS Authentication Required',
           'This payment requires 3DS authentication. The 3DS fields have been filled automatically.',
@@ -189,12 +143,9 @@ const App = () => {
             { text: 'Cancel', style: 'cancel' },
             {
               text: 'Proceed to 3DS',
-              onPress: () =>
-                process3ds({
-                  acsUrl: chargeResult.acsUrl,
-                  paReq: chargeResult.paReq,
-                  transactionId: chargeResult.transactionId,
-                }),
+              onPress: () => {
+                setThreeDsData(chargeResult)
+              },
             },
           ]
         )
@@ -208,212 +159,183 @@ const App = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.title}>CloudPayments Demo</Text>
+    <GestureHandlerRootView style={styles.gestureHandlerRott}>
+      <PortalProvider>
+        <ThreeDSecureSheet
+          onClose={() => {}}
+          onComplete={() => {
+            setThreeDsData(null)
+          }}
+          onError={() => {}}
+          threeDsData={threeDsData}
+        />
+        <SafeAreaView style={styles.container}>
+          <ScrollView contentContainerStyle={styles.scrollContent}>
+            <Text style={styles.title}>CloudPayments Demo</Text>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Public ID:</Text>
-          <TextInput
-            style={styles.input}
-            value={publicId}
-            onChangeText={setPublicId}
-            placeholder="Your CloudPayments Public ID"
-          />
-        </View>
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Public ID:</Text>
+              <TextInput
+                style={styles.input}
+                value={publicId}
+                onChangeText={setPublicId}
+                placeholder="Your CloudPayments Public ID"
+              />
+            </View>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Card Number:</Text>
-          <TextInput
-            style={styles.input}
-            value={cardNumber}
-            onChangeText={setCardNumber}
-            placeholder="4111 1111 1111 1111"
-            keyboardType="number-pad"
-          />
-        </View>
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Card Number:</Text>
+              <TextInput
+                style={styles.input}
+                value={cardNumber}
+                onChangeText={setCardNumber}
+                placeholder="4111 1111 1111 1111"
+                keyboardType="number-pad"
+              />
+            </View>
 
-        <View style={styles.row}>
-          <View style={[styles.inputContainer, { flex: 1, marginRight: 8 }]}>
-            <Text style={styles.label}>Expiration (MM/YY):</Text>
-            <TextInput
-              style={styles.input}
-              value={expDate}
-              onChangeText={setExpDate}
-              placeholder="12/25"
-            />
-          </View>
+            <View style={styles.row}>
+              <View style={[styles.inputContainer]}>
+                <Text style={styles.label}>Expiration (MM/YY):</Text>
+                <TextInput
+                  style={styles.input}
+                  value={expDate}
+                  onChangeText={setExpDate}
+                  placeholder="12/25"
+                />
+              </View>
 
-          <View style={[styles.inputContainer, { flex: 1, marginLeft: 8 }]}>
-            <Text style={styles.label}>CVV:</Text>
-            <TextInput
-              style={styles.input}
-              value={cvv}
-              onChangeText={setCvv}
-              placeholder="123"
-              keyboardType="number-pad"
-              secureTextEntry
-              maxLength={4}
-            />
-          </View>
-        </View>
+              <View style={[styles.inputContainer]}>
+                <Text style={styles.label}>CVV:</Text>
+                <TextInput
+                  style={styles.input}
+                  value={cvv}
+                  onChangeText={setCvv}
+                  placeholder="123"
+                  keyboardType="number-pad"
+                  secureTextEntry
+                  maxLength={4}
+                />
+              </View>
+            </View>
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[styles.button, initialized && styles.buttonSuccess]}
-            onPress={initialize}
-            disabled={loading}
-          >
-            <Text style={styles.buttonText}>
-              {initialized ? 'Re-Initialize' : 'Initialize SDK'}
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[styles.button, initialized && styles.buttonSuccess]}
+                onPress={initialize}
+                disabled={loading}
+              >
+                <Text style={styles.buttonText}>
+                  {initialized ? 'Re-Initialize' : 'Initialize SDK'}
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={generateCryptogram}
+                disabled={loading || !initialized}
+              >
+                <Text style={styles.buttonText}>Generate Cryptogram</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={validateCardNumber}
+                disabled={loading}
+              >
+                <Text style={styles.buttonText}>Validate Card Number</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={validateExpDate}
+                disabled={loading}
+              >
+                <Text style={styles.buttonText}>Validate Exp Date</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Direct Charge Section */}
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Direct Payment</Text>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Amount:</Text>
+                <TextInput
+                  style={styles.input}
+                  value={amount}
+                  onChangeText={setAmount}
+                  placeholder="1.00"
+                  keyboardType="decimal-pad"
+                />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Currency:</Text>
+                <TextInput
+                  style={styles.input}
+                  value={currency}
+                  onChangeText={setCurrency}
+                  placeholder="RUB"
+                />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Description:</Text>
+                <TextInput
+                  style={styles.input}
+                  value={description}
+                  onChangeText={setDescription}
+                  placeholder="Test payment"
+                />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Email (optional):</Text>
+                <TextInput
+                  style={styles.input}
+                  value={email}
+                  onChangeText={setEmail}
+                  placeholder="customer@example.com"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={makeCharge}
+                disabled={loading || !initialized}
+              >
+                <Text style={styles.buttonText}>Make Payment</Text>
+              </TouchableOpacity>
+            </View>
+
+            {loading && (
+              <ActivityIndicator
+                size="large"
+                color="#0066cc"
+                style={styles.loader}
+              />
+            )}
+          </ScrollView>
+
+          <View style={styles.resultContainer}>
+            <Text style={styles.resultTitle}>Result:</Text>
+            <Text style={styles.resultText} numberOfLines={10}>
+              {result}
             </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={generateCryptogram}
-            disabled={loading || !initialized}
-          >
-            <Text style={styles.buttonText}>Generate Cryptogram</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={validateCardNumber}
-            disabled={loading}
-          >
-            <Text style={styles.buttonText}>Validate Card Number</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={validateExpDate}
-            disabled={loading}
-          >
-            <Text style={styles.buttonText}>Validate Exp Date</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* 3DS Processing Section */}
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>3DS Processing</Text>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Transaction ID:</Text>
-            <TextInput
-              style={styles.input}
-              value={transactionId}
-              onChangeText={setTransactionId}
-              placeholder="Transaction ID"
-            />
           </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>paReq:</Text>
-            <TextInput
-              style={styles.input}
-              value={paReq}
-              onChangeText={setPaReq}
-              placeholder="paReq value"
-              multiline
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>ACS URL:</Text>
-            <TextInput
-              style={styles.input}
-              value={acsUrl}
-              onChangeText={setAcsUrl}
-              placeholder="https://acs.example.com"
-            />
-          </View>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={process3ds}
-            disabled={loading || !initialized}
-          >
-            <Text style={styles.buttonText}>Process 3DS</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Direct Charge Section */}
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Direct Payment</Text>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Amount:</Text>
-            <TextInput
-              style={styles.input}
-              value={amount}
-              onChangeText={setAmount}
-              placeholder="1.00"
-              keyboardType="decimal-pad"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Currency:</Text>
-            <TextInput
-              style={styles.input}
-              value={currency}
-              onChangeText={setCurrency}
-              placeholder="RUB"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Description:</Text>
-            <TextInput
-              style={styles.input}
-              value={description}
-              onChangeText={setDescription}
-              placeholder="Test payment"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Email (optional):</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              placeholder="customer@example.com"
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-          </View>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={makeCharge}
-            disabled={loading || !initialized}
-          >
-            <Text style={styles.buttonText}>Make Payment</Text>
-          </TouchableOpacity>
-        </View>
-
-        {loading && (
-          <ActivityIndicator
-            size="large"
-            color="#0066cc"
-            style={styles.loader}
-          />
-        )}
-      </ScrollView>
-
-      <View style={styles.resultContainer}>
-        <Text style={styles.resultTitle}>Result:</Text>
-        <Text style={styles.resultText} numberOfLines={10}>
-          {result}
-        </Text>
-      </View>
-    </SafeAreaView>
+        </SafeAreaView>
+      </PortalProvider>
+    </GestureHandlerRootView>
   )
 }
 
 const styles = StyleSheet.create({
+  gestureHandlerRott: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
@@ -431,6 +353,8 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 16,
+    flex: 1,
+    marginRight: 8,
   },
   row: {
     flexDirection: 'row',

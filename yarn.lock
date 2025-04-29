@@ -4071,7 +4071,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"invariant@npm:^2.2.4":
+"invariant@npm:2.2.4, invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
   dependencies:
@@ -5911,11 +5911,13 @@ __metadata:
     react: 19.0.0
     react-native: 0.78.0
     react-native-nitro-modules: "*"
+    react-native-webview: ^13.13.5
     typescript: ^5.5.4
   peerDependencies:
     react: "*"
     react-native: "*"
     react-native-nitro-modules: "*"
+    react-native-webview: ">=11.0.0"
   languageName: unknown
   linkType: soft
 
@@ -5926,6 +5928,19 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 3b61943021fda1fb34235037020d360dabef33cb4b6fe217b070f7500e3976c0acc6a1bd9dcfe212a704723d23ef7c21ec7c75c240d980daab0a95936aae6bb9
+  languageName: node
+  linkType: hard
+
+"react-native-webview@npm:^13.13.5":
+  version: 13.13.5
+  resolution: "react-native-webview@npm:13.13.5"
+  dependencies:
+    escape-string-regexp: ^4.0.0
+    invariant: 2.2.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 7f3bce1b37d6be9b2f07f0f7481181d5344f9e58022645b0d20dc58cd66056bb6efecacb231963959db6283cc66d977593db62a403c7c151f83568f83041c2eb
   languageName: node
   linkType: hard
 

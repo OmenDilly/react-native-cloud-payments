@@ -63,12 +63,14 @@
     "react": "19.0.0",
     "react-native": "0.78.0",
     "react-native-nitro-modules": "*",
+    "react-native-webview": "^13.13.5",
     "typescript": "^5.5.4"
   },
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-nitro-modules": "*"
+    "react-native-nitro-modules": "*",
+    "react-native-webview": ">=11.0.0"
   },
   "eslintConfig": {
     "root": true,

@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
+    "@gorhom/bottom-sheet": "^5",
+    "@gorhom/portal": "^1.0.14",
     "@omendilly/react-native-cloud-payments": "file:../",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
@@ -34,6 +36,7 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-native": "0.76.9",
+    "react-native-cloud-payments": "file:..",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-nitro-modules": "*",
     "react-native-reanimated": "~3.16.1",

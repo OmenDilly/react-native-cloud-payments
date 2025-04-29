@@ -9,6 +9,13 @@ import type {
   ThreeDsResult,
 } from './specs/CloudPayments.nitro'
 
+// Export UI components
+export { default as ThreeDSecureView } from './ui/components/ThreeDSecureView'
+export type {
+  ThreeDsData,
+  ThreeDSecureViewProps,
+} from './ui/components/ThreeDSecureView'
+
 // Export types
 export type {
   CardCryptogramParams,

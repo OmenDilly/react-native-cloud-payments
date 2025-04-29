@@ -1,5 +1,4 @@
 #import <WebKit/WebKit.h>
-#import <NitroModules/NitroModules.h>
 
 // Import WebKit to ensure it's available to generated Swift headers
 @interface WKNavigationDelegateForward : NSObject <WKNavigationDelegate>
