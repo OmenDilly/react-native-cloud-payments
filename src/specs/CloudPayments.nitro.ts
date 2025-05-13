@@ -7,7 +7,7 @@ export interface CloudPayments
   initialize(
     publicId: string,
     publicKey: string,
-    keyVersion: string
+    keyVersion: number
   ): Promise<boolean>
   generateCardCryptogram(params: CardCryptogramParams): Promise<string>
   isCardNumberValid(cardNumber: string): Promise<boolean>

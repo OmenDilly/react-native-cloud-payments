@@ -63,7 +63,7 @@ namespace margelo::nitro::cloudpayments {
 
     public:
       // Methods
-      virtual std::shared_ptr<Promise<bool>> initialize(const std::string& publicId, const std::string& publicKey, const std::string& keyVersion) = 0;
+      virtual std::shared_ptr<Promise<bool>> initialize(const std::string& publicId, const std::string& publicKey, double keyVersion) = 0;
       virtual std::shared_ptr<Promise<std::string>> generateCardCryptogram(const CardCryptogramParams& params) = 0;
       virtual std::shared_ptr<Promise<bool>> isCardNumberValid(const std::string& cardNumber) = 0;
       virtual std::shared_ptr<Promise<bool>> isExpDateValid(const std::string& expDate) = 0;

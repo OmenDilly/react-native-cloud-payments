@@ -10,7 +10,7 @@ import NitroModules
 class HybridCloudPayments: HybridCloudPaymentsSpec {
     var publicId: String = ""
     var publicKey: String = ""
-    var keyVersion: String = ""
+    var keyVersion: Double = 0
     // Store a reference to the 3DS delegate to access the results
     private var threeDsDelegate: CustomThreeDsDelegate?
 
@@ -19,7 +19,7 @@ class HybridCloudPayments: HybridCloudPaymentsSpec {
         super.init()
     }
 
-    func initialize(publicId: String, publicKey: String, keyVersion: String) throws -> Promise<Bool> {
+    func initialize(publicId: String, publicKey: String, keyVersion: Double) throws -> Promise<Bool> {
         return Promise.async {
             self.publicId = publicId
             self.publicKey = publicKey
@@ -37,7 +37,7 @@ class HybridCloudPayments: HybridCloudPaymentsSpec {
                 cvv: params.cvv,
                 merchantPublicID: self.publicId,
                 publicKey: self.publicKey,
-                keyVersion: self.keyVersion
+                keyVersion: Int(self.keyVersion)
             ) else {
                 throw NSError(domain: "CloudPayments", code: 1, userInfo: [
                     NSLocalizedDescriptionKey: "Failed to create card cryptogram packet"

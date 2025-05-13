@@ -74,8 +74,8 @@ namespace margelo::nitro::cloudpayments {
 
   public:
     // Methods
-    inline std::shared_ptr<Promise<bool>> initialize(const std::string& publicId, const std::string& publicKey, const std::string& keyVersion) override {
-      auto __result = _swiftPart.initialize(publicId, publicKey, keyVersion);
+    inline std::shared_ptr<Promise<bool>> initialize(const std::string& publicId, const std::string& publicKey, double keyVersion) override {
+      auto __result = _swiftPart.initialize(publicId, publicKey, std::forward<decltype(keyVersion)>(keyVersion));
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

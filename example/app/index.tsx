@@ -38,7 +38,17 @@ const App = () => {
   const initialize = async () => {
     try {
       setLoading(true)
-      const success = await CloudPaymentsModule.initialize(publicId)
+      const publicKeyData = await fetch(
+        'https://api.cloudpayments.ru/payments/publickey'
+      )
+      const publicKey: { Pem: string; Version: number } =
+        await publicKeyData.json()
+      console.log('public key: ', publicKey)
+      const success = await CloudPaymentsModule.initialize(
+        publicId,
+        publicKey.Pem,
+        publicKey.Version
+      )
       setInitialized(success)
       setResult(`Initialization ${success ? 'successful' : 'failed'}`)
     } catch (error: any) {

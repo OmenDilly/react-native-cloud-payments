@@ -42,7 +42,7 @@ abstract class HybridCloudPaymentsSpec: HybridObject() {
   // Methods
   @DoNotStrip
   @Keep
-  abstract fun initialize(publicId: String, publicKey: String, keyVersion: String): Promise<Boolean>
+  abstract fun initialize(publicId: String, publicKey: String, keyVersion: Double): Promise<Boolean>
   
   @DoNotStrip
   @Keep

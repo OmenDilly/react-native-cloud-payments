@@ -14,7 +14,7 @@ public protocol HybridCloudPaymentsSpec_protocol: HybridObject {
   
 
   // Methods
-  func initialize(publicId: String, publicKey: String, keyVersion: String) throws -> Promise<Bool>
+  func initialize(publicId: String, publicKey: String, keyVersion: Double) throws -> Promise<Bool>
   func generateCardCryptogram(params: CardCryptogramParams) throws -> Promise<String>
   func isCardNumberValid(cardNumber: String) throws -> Promise<Bool>
   func isExpDateValid(expDate: String) throws -> Promise<Bool>
