@@ -131,10 +131,12 @@ class HybridCloudPayments: HybridCloudPaymentsSpec {
             // If no cryptogram but we have card details, create one
             if cryptogram == nil && params.cardNumber != nil && params.expDate != nil && params.cvv != nil {
                 guard let generatedCryptogram = Card.makeCardCryptogramPacket(
-                    params.cardNumber!,
+                    cardNumber: params.cardNumber!,
                     expDate: params.expDate!,
                     cvv: params.cvv!,
-                    merchantPublicID: self.publicId
+                    merchantPublicID: self.publicId,
+                    publicKey: self.publicKey,
+                    keyVersion: Int(self.keyVersion)
                 ) else {
                     throw NSError(domain: "CloudPayments", code: 1, userInfo: [
                         NSLocalizedDescriptionKey: "Failed to create card cryptogram packet"
