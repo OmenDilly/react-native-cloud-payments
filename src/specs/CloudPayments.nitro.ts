@@ -4,7 +4,11 @@ export type ChargeStatus = 'Completed' | 'Authorized' | 'Declined' | 'ThreeDS'
 
 export interface CloudPayments
   extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
-  initialize(publicId: string): Promise<boolean>
+  initialize(
+    publicId: string,
+    publicKey: string,
+    keyVersion: string
+  ): Promise<boolean>
   generateCardCryptogram(params: CardCryptogramParams): Promise<string>
   isCardNumberValid(cardNumber: string): Promise<boolean>
   isExpDateValid(expDate: string): Promise<boolean>

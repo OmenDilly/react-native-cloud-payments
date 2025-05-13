@@ -58,9 +58,9 @@ namespace margelo::nitro::cloudpayments {
   
 
   // Methods
-  std::shared_ptr<Promise<bool>> JHybridCloudPaymentsSpec::initialize(const std::string& publicId) {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JString> /* publicId */)>("initialize");
-    auto __result = method(_javaPart, jni::make_jstring(publicId));
+  std::shared_ptr<Promise<bool>> JHybridCloudPaymentsSpec::initialize(const std::string& publicId, const std::string& publicKey, const std::string& keyVersion) {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JString> /* publicId */, jni::alias_ref<jni::JString> /* publicKey */, jni::alias_ref<jni::JString> /* keyVersion */)>("initialize");
+    auto __result = method(_javaPart, jni::make_jstring(publicId), jni::make_jstring(publicKey), jni::make_jstring(keyVersion));
     return [&]() {
       auto __promise = Promise<bool>::create();
       __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
