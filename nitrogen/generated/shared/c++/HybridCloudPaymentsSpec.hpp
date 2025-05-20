@@ -15,22 +15,10 @@
 
 // Forward declaration of `CardCryptogramParams` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { struct CardCryptogramParams; }
-// Forward declaration of `ThreeDsResult` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ThreeDsResult; }
-// Forward declaration of `ThreeDsParams` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ThreeDsParams; }
-// Forward declaration of `ChargeResult` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ChargeResult; }
-// Forward declaration of `ChargeParams` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ChargeParams; }
 
 #include <NitroModules/Promise.hpp>
 #include <string>
 #include "CardCryptogramParams.hpp"
-#include "ThreeDsResult.hpp"
-#include "ThreeDsParams.hpp"
-#include "ChargeResult.hpp"
-#include "ChargeParams.hpp"
 
 namespace margelo::nitro::cloudpayments {
 
@@ -65,11 +53,6 @@ namespace margelo::nitro::cloudpayments {
       // Methods
       virtual std::shared_ptr<Promise<bool>> initialize(const std::string& publicId, const std::string& publicKey, double keyVersion) = 0;
       virtual std::shared_ptr<Promise<std::string>> generateCardCryptogram(const CardCryptogramParams& params) = 0;
-      virtual std::shared_ptr<Promise<bool>> isCardNumberValid(const std::string& cardNumber) = 0;
-      virtual std::shared_ptr<Promise<bool>> isExpDateValid(const std::string& expDate) = 0;
-      virtual std::shared_ptr<Promise<ThreeDsResult>> show3ds(const ThreeDsParams& params) = 0;
-      virtual std::shared_ptr<Promise<bool>> finish3ds(const std::string& transactionId) = 0;
-      virtual std::shared_ptr<Promise<ChargeResult>> charge(const ChargeParams& params) = 0;
 
     protected:
       // Hybrid Setup

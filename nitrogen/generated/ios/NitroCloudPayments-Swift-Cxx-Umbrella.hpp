@@ -10,32 +10,16 @@
 // Forward declarations of C++ defined types
 // Forward declaration of `CardCryptogramParams` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { struct CardCryptogramParams; }
-// Forward declaration of `ChargeParams` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ChargeParams; }
-// Forward declaration of `ChargeResult` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ChargeResult; }
-// Forward declaration of `ChargeStatus` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { enum class ChargeStatus; }
 // Forward declaration of `HybridCloudPaymentsSpec` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { class HybridCloudPaymentsSpec; }
-// Forward declaration of `ThreeDsParams` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ThreeDsParams; }
-// Forward declaration of `ThreeDsResult` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ThreeDsResult; }
 
 // Include C++ defined types
 #include "CardCryptogramParams.hpp"
-#include "ChargeParams.hpp"
-#include "ChargeResult.hpp"
-#include "ChargeStatus.hpp"
 #include "HybridCloudPaymentsSpec.hpp"
-#include "ThreeDsParams.hpp"
-#include "ThreeDsResult.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
-#include <optional>
 #include <string>
 
 // C++ helpers for Swift

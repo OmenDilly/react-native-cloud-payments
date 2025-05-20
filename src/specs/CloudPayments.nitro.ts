@@ -10,15 +10,6 @@ export interface CloudPayments
     keyVersion: number
   ): Promise<boolean>
   generateCardCryptogram(params: CardCryptogramParams): Promise<string>
-  isCardNumberValid(cardNumber: string): Promise<boolean>
-  isExpDateValid(expDate: string): Promise<boolean>
-
-  // 3DS Processing
-  show3ds(params: ThreeDsParams): Promise<ThreeDsResult>
-  finish3ds(transactionId: string): Promise<boolean>
-
-  // Direct payment
-  charge(params: ChargeParams): Promise<ChargeResult>
 }
 
 export interface CardCryptogramParams {

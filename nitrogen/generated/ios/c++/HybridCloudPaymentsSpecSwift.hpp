@@ -14,26 +14,10 @@ namespace NitroCloudPayments { class HybridCloudPaymentsSpec_cxx; }
 
 // Forward declaration of `CardCryptogramParams` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { struct CardCryptogramParams; }
-// Forward declaration of `ThreeDsResult` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ThreeDsResult; }
-// Forward declaration of `ThreeDsParams` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ThreeDsParams; }
-// Forward declaration of `ChargeResult` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ChargeResult; }
-// Forward declaration of `ChargeStatus` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { enum class ChargeStatus; }
-// Forward declaration of `ChargeParams` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ChargeParams; }
 
 #include <NitroModules/Promise.hpp>
 #include <string>
 #include "CardCryptogramParams.hpp"
-#include "ThreeDsResult.hpp"
-#include "ThreeDsParams.hpp"
-#include "ChargeResult.hpp"
-#include "ChargeStatus.hpp"
-#include <optional>
-#include "ChargeParams.hpp"
 
 #include "NitroCloudPayments-Swift-Cxx-Umbrella.hpp"
 
@@ -84,46 +68,6 @@ namespace margelo::nitro::cloudpayments {
     }
     inline std::shared_ptr<Promise<std::string>> generateCardCryptogram(const CardCryptogramParams& params) override {
       auto __result = _swiftPart.generateCardCryptogram(params);
-      if (__result.hasError()) [[unlikely]] {
-        std::rethrow_exception(__result.error());
-      }
-      auto __value = std::move(__result.value());
-      return __value;
-    }
-    inline std::shared_ptr<Promise<bool>> isCardNumberValid(const std::string& cardNumber) override {
-      auto __result = _swiftPart.isCardNumberValid(cardNumber);
-      if (__result.hasError()) [[unlikely]] {
-        std::rethrow_exception(__result.error());
-      }
-      auto __value = std::move(__result.value());
-      return __value;
-    }
-    inline std::shared_ptr<Promise<bool>> isExpDateValid(const std::string& expDate) override {
-      auto __result = _swiftPart.isExpDateValid(expDate);
-      if (__result.hasError()) [[unlikely]] {
-        std::rethrow_exception(__result.error());
-      }
-      auto __value = std::move(__result.value());
-      return __value;
-    }
-    inline std::shared_ptr<Promise<ThreeDsResult>> show3ds(const ThreeDsParams& params) override {
-      auto __result = _swiftPart.show3ds(params);
-      if (__result.hasError()) [[unlikely]] {
-        std::rethrow_exception(__result.error());
-      }
-      auto __value = std::move(__result.value());
-      return __value;
-    }
-    inline std::shared_ptr<Promise<bool>> finish3ds(const std::string& transactionId) override {
-      auto __result = _swiftPart.finish3ds(transactionId);
-      if (__result.hasError()) [[unlikely]] {
-        std::rethrow_exception(__result.error());
-      }
-      auto __value = std::move(__result.value());
-      return __value;
-    }
-    inline std::shared_ptr<Promise<ChargeResult>> charge(const ChargeParams& params) override {
-      auto __result = _swiftPart.charge(params);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

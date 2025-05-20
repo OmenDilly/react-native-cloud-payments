@@ -1,12 +1,7 @@
-import ThreeDSecureSheet from '@/components/ThreeDSecureSheet'
 import { PortalProvider } from '@gorhom/portal'
-import {
-  CloudPaymentsModule,
-  ThreeDsData,
-} from '@omendilly/react-native-cloud-payments'
+import { CloudPaymentsModule } from '@omendilly/react-native-cloud-payments'
 import React, { useState } from 'react'
 import {
-  ActivityIndicator,
   Alert,
   SafeAreaView,
   ScrollView,
@@ -81,104 +76,9 @@ const App = () => {
     }
   }
 
-  const validateCardNumber = async () => {
-    try {
-      setLoading(true)
-      const isValid = await CloudPaymentsModule.isCardNumberValid(cardNumber)
-      setResult(`Card number is ${isValid ? 'valid' : 'invalid'}`)
-    } catch (error: any) {
-      Alert.alert('Validation Error', error.message)
-      setResult(`Error: ${error.message}`)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const [threeDsData, setThreeDsData] = useState<ThreeDsData | null>(null)
-
-  const validateExpDate = async () => {
-    try {
-      setLoading(true)
-      const isValid = await CloudPaymentsModule.isExpDateValid(expDate)
-      setResult(`Expiration date is ${isValid ? 'valid' : 'invalid'}`)
-    } catch (error: any) {
-      Alert.alert('Validation Error', error.message)
-      setResult(`Error: ${error.message}`)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Make a direct charge
-  const makeCharge = async () => {
-    if (!initialized) {
-      Alert.alert('Error', 'Please initialize first')
-      return
-    }
-
-    try {
-      setLoading(true)
-      const chargeResult = await CloudPaymentsModule.charge({
-        amount: parseFloat(amount),
-        currency,
-        description,
-        email: email || undefined,
-        cardNumber,
-        expDate,
-        cvv,
-      })
-
-      console.log('transaction result: ', JSON.stringify(chargeResult))
-
-      setResult(
-        `Charge Result:\nTransaction ID: ${chargeResult.transactionId}\nStatus: ${
-          chargeResult.status
-        }\nSuccess: ${chargeResult.success ? 'Yes' : 'No'}`
-      )
-
-      if (chargeResult.reasonMessage) {
-        setResult((prev) => `${prev}\nMessage: ${chargeResult.reasonMessage}`)
-      }
-
-      // If 3DS is required, we'll show the 3DS dialog
-      if (
-        chargeResult.status === 'ThreeDS' &&
-        !!chargeResult.paReq &&
-        !!chargeResult.acsUrl
-      ) {
-        Alert.alert(
-          '3DS Authentication Required',
-          'This payment requires 3DS authentication. The 3DS fields have been filled automatically.',
-          [
-            { text: 'Cancel', style: 'cancel' },
-            {
-              text: 'Proceed to 3DS',
-              onPress: () => {
-                setThreeDsData(chargeResult)
-              },
-            },
-          ]
-        )
-      }
-    } catch (error: any) {
-      Alert.alert('Charge Error', error.message)
-      setResult(`Error: ${error.message}`)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   return (
     <GestureHandlerRootView style={styles.gestureHandlerRott}>
       <PortalProvider>
-        <ThreeDSecureSheet
-          onClose={() => {}}
-          onComplete={() => {
-            setThreeDsData(null)
-          }}
-          onError={() => {}}
-          threeDsData={threeDsData}
-        />
         <SafeAreaView style={styles.container}>
           <ScrollView contentContainerStyle={styles.scrollContent}>
             <Text style={styles.title}>CloudPayments Demo</Text>
@@ -247,26 +147,10 @@ const App = () => {
               >
                 <Text style={styles.buttonText}>Generate Cryptogram</Text>
               </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.button}
-                onPress={validateCardNumber}
-                disabled={loading}
-              >
-                <Text style={styles.buttonText}>Validate Card Number</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.button}
-                onPress={validateExpDate}
-                disabled={loading}
-              >
-                <Text style={styles.buttonText}>Validate Exp Date</Text>
-              </TouchableOpacity>
             </View>
 
             {/* Direct Charge Section */}
-            <View style={styles.sectionContainer}>
+            {/* <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Direct Payment</Text>
 
               <View style={styles.inputContainer}>
@@ -311,14 +195,6 @@ const App = () => {
                   autoCapitalize="none"
                 />
               </View>
-
-              <TouchableOpacity
-                style={styles.button}
-                onPress={makeCharge}
-                disabled={loading || !initialized}
-              >
-                <Text style={styles.buttonText}>Make Payment</Text>
-              </TouchableOpacity>
             </View>
 
             {loading && (
@@ -327,7 +203,7 @@ const App = () => {
                 color="#0066cc"
                 style={styles.loader}
               />
-            )}
+            )} */}
           </ScrollView>
 
           <View style={styles.resultContainer}>

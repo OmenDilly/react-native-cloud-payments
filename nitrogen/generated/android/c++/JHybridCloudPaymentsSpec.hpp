@@ -53,11 +53,6 @@ namespace margelo::nitro::cloudpayments {
     // Methods
     std::shared_ptr<Promise<bool>> initialize(const std::string& publicId, const std::string& publicKey, double keyVersion) override;
     std::shared_ptr<Promise<std::string>> generateCardCryptogram(const CardCryptogramParams& params) override;
-    std::shared_ptr<Promise<bool>> isCardNumberValid(const std::string& cardNumber) override;
-    std::shared_ptr<Promise<bool>> isExpDateValid(const std::string& expDate) override;
-    std::shared_ptr<Promise<ThreeDsResult>> show3ds(const ThreeDsParams& params) override;
-    std::shared_ptr<Promise<bool>> finish3ds(const std::string& transactionId) override;
-    std::shared_ptr<Promise<ChargeResult>> charge(const ChargeParams& params) override;
 
   private:
     friend HybridBase;

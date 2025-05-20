@@ -8,31 +8,21 @@
 #pragma once
 
 // Forward declarations of C++ defined types
-// Forward declaration of `ChargeResult` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ChargeResult; }
-// Forward declaration of `ChargeStatus` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { enum class ChargeStatus; }
 // Forward declaration of `HybridCloudPaymentsSpec` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { class HybridCloudPaymentsSpec; }
-// Forward declaration of `ThreeDsResult` to properly resolve imports.
-namespace margelo::nitro::cloudpayments { struct ThreeDsResult; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridCloudPaymentsSpec_cxx` to properly resolve imports.
 namespace NitroCloudPayments { class HybridCloudPaymentsSpec_cxx; }
 
 // Include C++ defined types
-#include "ChargeResult.hpp"
-#include "ChargeStatus.hpp"
 #include "HybridCloudPaymentsSpec.hpp"
-#include "ThreeDsResult.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/PromiseHolder.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <functional>
 #include <memory>
-#include <optional>
 #include <string>
 
 /**
@@ -131,92 +121,6 @@ namespace margelo::nitro::cloudpayments::bridge::swift {
     return Func_void_std__string_Wrapper(std::move(value));
   }
   
-  // pragma MARK: std::shared_ptr<Promise<ThreeDsResult>>
-  /**
-   * Specialized version of `std::shared_ptr<Promise<ThreeDsResult>>`.
-   */
-  using std__shared_ptr_Promise_ThreeDsResult__ = std::shared_ptr<Promise<ThreeDsResult>>;
-  inline std::shared_ptr<Promise<ThreeDsResult>> create_std__shared_ptr_Promise_ThreeDsResult__() {
-    return Promise<ThreeDsResult>::create();
-  }
-  inline PromiseHolder<ThreeDsResult> wrap_std__shared_ptr_Promise_ThreeDsResult__(std::shared_ptr<Promise<ThreeDsResult>> promise) {
-    return PromiseHolder<ThreeDsResult>(std::move(promise));
-  }
-  
-  // pragma MARK: std::function<void(const ThreeDsResult& /* result */)>
-  /**
-   * Specialized version of `std::function<void(const ThreeDsResult&)>`.
-   */
-  using Func_void_ThreeDsResult = std::function<void(const ThreeDsResult& /* result */)>;
-  /**
-   * Wrapper class for a `std::function<void(const ThreeDsResult& / * result * /)>`, this can be used from Swift.
-   */
-  class Func_void_ThreeDsResult_Wrapper final {
-  public:
-    explicit Func_void_ThreeDsResult_Wrapper(std::function<void(const ThreeDsResult& /* result */)>&& func): _function(std::make_shared<std::function<void(const ThreeDsResult& /* result */)>>(std::move(func))) {}
-    inline void call(ThreeDsResult result) const {
-      _function->operator()(result);
-    }
-  private:
-    std::shared_ptr<std::function<void(const ThreeDsResult& /* result */)>> _function;
-  };
-  Func_void_ThreeDsResult create_Func_void_ThreeDsResult(void* _Nonnull swiftClosureWrapper);
-  inline Func_void_ThreeDsResult_Wrapper wrap_Func_void_ThreeDsResult(Func_void_ThreeDsResult value) {
-    return Func_void_ThreeDsResult_Wrapper(std::move(value));
-  }
-  
-  // pragma MARK: std::optional<double>
-  /**
-   * Specialized version of `std::optional<double>`.
-   */
-  using std__optional_double_ = std::optional<double>;
-  inline std::optional<double> create_std__optional_double_(const double& value) {
-    return std::optional<double>(value);
-  }
-  
-  // pragma MARK: std::optional<std::string>
-  /**
-   * Specialized version of `std::optional<std::string>`.
-   */
-  using std__optional_std__string_ = std::optional<std::string>;
-  inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) {
-    return std::optional<std::string>(value);
-  }
-  
-  // pragma MARK: std::shared_ptr<Promise<ChargeResult>>
-  /**
-   * Specialized version of `std::shared_ptr<Promise<ChargeResult>>`.
-   */
-  using std__shared_ptr_Promise_ChargeResult__ = std::shared_ptr<Promise<ChargeResult>>;
-  inline std::shared_ptr<Promise<ChargeResult>> create_std__shared_ptr_Promise_ChargeResult__() {
-    return Promise<ChargeResult>::create();
-  }
-  inline PromiseHolder<ChargeResult> wrap_std__shared_ptr_Promise_ChargeResult__(std::shared_ptr<Promise<ChargeResult>> promise) {
-    return PromiseHolder<ChargeResult>(std::move(promise));
-  }
-  
-  // pragma MARK: std::function<void(const ChargeResult& /* result */)>
-  /**
-   * Specialized version of `std::function<void(const ChargeResult&)>`.
-   */
-  using Func_void_ChargeResult = std::function<void(const ChargeResult& /* result */)>;
-  /**
-   * Wrapper class for a `std::function<void(const ChargeResult& / * result * /)>`, this can be used from Swift.
-   */
-  class Func_void_ChargeResult_Wrapper final {
-  public:
-    explicit Func_void_ChargeResult_Wrapper(std::function<void(const ChargeResult& /* result */)>&& func): _function(std::make_shared<std::function<void(const ChargeResult& /* result */)>>(std::move(func))) {}
-    inline void call(ChargeResult result) const {
-      _function->operator()(result);
-    }
-  private:
-    std::shared_ptr<std::function<void(const ChargeResult& /* result */)>> _function;
-  };
-  Func_void_ChargeResult create_Func_void_ChargeResult(void* _Nonnull swiftClosureWrapper);
-  inline Func_void_ChargeResult_Wrapper wrap_Func_void_ChargeResult(Func_void_ChargeResult value) {
-    return Func_void_ChargeResult_Wrapper(std::move(value));
-  }
-  
   // pragma MARK: std::shared_ptr<margelo::nitro::cloudpayments::HybridCloudPaymentsSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::cloudpayments::HybridCloudPaymentsSpec>`.
@@ -245,24 +149,6 @@ namespace margelo::nitro::cloudpayments::bridge::swift {
   }
   inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::exception_ptr& error) {
     return Result<std::shared_ptr<Promise<std::string>>>::withError(error);
-  }
-  
-  // pragma MARK: Result<std::shared_ptr<Promise<ThreeDsResult>>>
-  using Result_std__shared_ptr_Promise_ThreeDsResult___ = Result<std::shared_ptr<Promise<ThreeDsResult>>>;
-  inline Result_std__shared_ptr_Promise_ThreeDsResult___ create_Result_std__shared_ptr_Promise_ThreeDsResult___(const std::shared_ptr<Promise<ThreeDsResult>>& value) {
-    return Result<std::shared_ptr<Promise<ThreeDsResult>>>::withValue(value);
-  }
-  inline Result_std__shared_ptr_Promise_ThreeDsResult___ create_Result_std__shared_ptr_Promise_ThreeDsResult___(const std::exception_ptr& error) {
-    return Result<std::shared_ptr<Promise<ThreeDsResult>>>::withError(error);
-  }
-  
-  // pragma MARK: Result<std::shared_ptr<Promise<ChargeResult>>>
-  using Result_std__shared_ptr_Promise_ChargeResult___ = Result<std::shared_ptr<Promise<ChargeResult>>>;
-  inline Result_std__shared_ptr_Promise_ChargeResult___ create_Result_std__shared_ptr_Promise_ChargeResult___(const std::shared_ptr<Promise<ChargeResult>>& value) {
-    return Result<std::shared_ptr<Promise<ChargeResult>>>::withValue(value);
-  }
-  inline Result_std__shared_ptr_Promise_ChargeResult___ create_Result_std__shared_ptr_Promise_ChargeResult___(const std::exception_ptr& error) {
-    return Result<std::shared_ptr<Promise<ChargeResult>>>::withError(error);
   }
 
 } // namespace margelo::nitro::cloudpayments::bridge::swift

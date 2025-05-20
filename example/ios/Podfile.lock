@@ -1,6 +1,6 @@
 PODS:
   - boost (1.84.0)
-  - Cloudpayments (1.5.18):
+  - Cloudpayments (1.6.0):
     - CloudpaymentsNetworking
   - CloudpaymentsNetworking (1.0.2)
   - DoubleConversion (1.1.6)
@@ -18,7 +18,7 @@ PODS:
     - ExpoModulesCore
   - ExpoHaptics (14.0.1):
     - ExpoModulesCore
-  - ExpoHead (4.0.20):
+  - ExpoHead (4.0.21):
     - ExpoModulesCore
   - ExpoKeepAwake (14.0.3):
     - ExpoModulesCore
@@ -62,7 +62,7 @@ PODS:
   - hermes-engine (0.76.9):
     - hermes-engine/Pre-built (= 0.76.9)
   - hermes-engine/Pre-built (0.76.9)
-  - NitroCloudPayments (0.0.3):
+  - NitroCloudPayments (0.0.5):
     - Cloudpayments
     - DoubleConversion
     - glog
@@ -2182,15 +2182,15 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Cloudpayments:
-    :commit: 71e2c848ad09c4d556de5c6440ac8acd757ccb2a
+    :commit: 9badecd56c6a7643b651bf8b0539e04b20774b49
     :git: https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios
   CloudpaymentsNetworking:
-    :commit: 71e2c848ad09c4d556de5c6440ac8acd757ccb2a
+    :commit: 9badecd56c6a7643b651bf8b0539e04b20774b49
     :git: https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios
 
 SPEC CHECKSUMS:
   boost: 1dca942403ed9342f98334bf4c3621f011aa7946
-  Cloudpayments: 7f3661619b3df82b750ba8a500da0b8677f781fb
+  Cloudpayments: ba6dc202c27c72c5e14de8454f5d3c19c255396d
   CloudpaymentsNetworking: 8d7f72b94360dcf3846ac10d9c479ec7a57f19b8
   DoubleConversion: f16ae600a246532c4020132d54af21d0ddb2a385
   EXConstants: fcfc75800824ac2d5c592b5bc74130bad17b146b
@@ -2200,7 +2200,7 @@ SPEC CHECKSUMS:
   ExpoFileSystem: 42d363d3b96f9afab980dcef60d5657a4443c655
   ExpoFont: f354e926f8feae5e831ec8087f36652b44a0b188
   ExpoHaptics: 8d199b2f33245ea85289ff6c954c7ee7c00a5b5d
-  ExpoHead: cee2d16ef197aaadb0ac481cf221a663636eb074
+  ExpoHead: df924203fbf8e0913fc38b0f6aec71f9a9115482
   ExpoKeepAwake: b0171a73665bfcefcfcc311742a72a956e6aa680
   ExpoLinking: 8d12bee174ba0cdf31239706578e29e74a417402
   ExpoModulesCore: c25d77625038b1968ea1afefc719862c0d8dd993
@@ -2213,7 +2213,7 @@ SPEC CHECKSUMS:
   fmt: 01b82d4ca6470831d1cc0852a1af644be019e8f6
   glog: 08b301085f15bcbb6ff8632a8ebaf239aae04e6a
   hermes-engine: 9e868dc7be781364296d6ee2f56d0c1a9ef0bb11
-  NitroCloudPayments: a3cca601aefd23ec9d965e90e58676fa6a20c38b
+  NitroCloudPayments: 2b1ba5395168d0c2c26a789e91aaf2cd8e5857b4
   NitroModules: fdc6fcf8f397091615951004ae81022b759e27bc
   RCT-Folly: ea9d9256ba7f9322ef911169a9f696e5857b9e17
   RCTDeprecation: ebe712bb05077934b16c6bf25228bdec34b64f83
@@ -2279,6 +2279,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: feb4910aba9742cfedc059e2b2902e22ffe9954a
 
-PODFILE CHECKSUM: 9720eae990bb7daa33c5b8e1be08c2b0f98dda53
+PODFILE CHECKSUM: 6f1d2fd940b456919ec7a50762da6b16fcb24740
 
 COCOAPODS: 1.16.2

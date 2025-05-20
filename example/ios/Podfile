@@ -11,6 +11,8 @@ platform :ios, podfile_properties['ios.deploymentTarget'] || '15.1'
 install! 'cocoapods',
   :deterministic_uuids => false
 
+  pod 'Cloudpayments', :git => "https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios", :branch => "master"
+  pod 'CloudpaymentsNetworking', :git => "https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios", :branch => "master"
 prepare_react_native_project!
 
 target 'example' do
@@ -31,13 +33,11 @@ target 'example' do
     ]
   end
 
-  pod 'Cloudpayments', :git =>  "https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios", :branch => "master"
-  pod 'CloudpaymentsNetworking', :git =>  "https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios", :branch => "master"
-
   config = use_native_modules!(config_command)
 
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
   use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
+
 
   use_react_native!(
     :path => config[:reactNativePath],

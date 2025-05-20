@@ -47,26 +47,6 @@ abstract class HybridCloudPaymentsSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun generateCardCryptogram(params: CardCryptogramParams): Promise<String>
-  
-  @DoNotStrip
-  @Keep
-  abstract fun isCardNumberValid(cardNumber: String): Promise<Boolean>
-  
-  @DoNotStrip
-  @Keep
-  abstract fun isExpDateValid(expDate: String): Promise<Boolean>
-  
-  @DoNotStrip
-  @Keep
-  abstract fun show3ds(params: ThreeDsParams): Promise<ThreeDsResult>
-  
-  @DoNotStrip
-  @Keep
-  abstract fun finish3ds(transactionId: String): Promise<Boolean>
-  
-  @DoNotStrip
-  @Keep
-  abstract fun charge(params: ChargeParams): Promise<ChargeResult>
 
   private external fun initHybrid(): HybridData
 
