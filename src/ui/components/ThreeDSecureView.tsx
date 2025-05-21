@@ -42,6 +42,7 @@ export interface ThreeDSecureViewProps {
   renderCloseButton?: () => React.ReactNode
   containerStyle?: StyleProp<ViewStyle>
   webViewStyle?: StyleProp<ViewStyle>
+  showLoader?: boolean
 }
 
 // Define a possible structure for the message from your server's termUrl page
@@ -75,6 +76,7 @@ const ThreeDSecureView: React.FC<ThreeDSecureViewProps> = ({
   renderCloseButton,
   containerStyle,
   webViewStyle,
+  showLoader = true,
 }) => {
   const [webViewSource, setWebViewSource] = useState<{ html: string } | null>(
     null
@@ -577,7 +579,7 @@ const ThreeDSecureView: React.FC<ThreeDSecureViewProps> = ({
           />
         )}
 
-        {isLoading && (
+        {showLoader && isLoading && (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" />
             <Text style={styles.loadingText}>
