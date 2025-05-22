@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   ActivityIndicator,
   Pressable,
@@ -31,7 +31,6 @@ export interface ThreeDSecureViewProps {
   onClose?: () => void // Callback when the modal is manually closed or process finishes
   onOpen?: () => void // Callback when the modal is manually opened or process starts
   onLoadStart?: () => void // Callback when the modal is manually opened or process starts
-  onLoadEnd?: () => void // Callback when the modal is manually opened or process starts
   debug?: boolean // Debug flag to enable verbose logging
 
   // Optional UI customization props
@@ -67,7 +66,6 @@ const ThreeDSecureView: React.FC<ThreeDSecureViewProps> = ({
   onClose,
   onOpen,
   onLoadStart,
-  onLoadEnd,
   debug = false,
   showCloseButton = true,
   loadingText = 'Processing 3D Secure...',
@@ -87,28 +85,25 @@ const ThreeDSecureView: React.FC<ThreeDSecureViewProps> = ({
   const webViewRef = useRef<WebView>(null)
 
   // Prepare HTML form for auto-POST
-  const prepareAndShow3DSForm = useCallback(
-    (data: ThreeDsData) => {
-      onLoadStart?.()
-      setIsLoading(true)
-      setErrorState(null)
-      setWebViewSource(null)
-      setIsTermUrlReached(false) // Reset flag
+  const prepareAndShow3DSForm = (data: ThreeDsData) => {
+    onLoadStart?.()
+    setIsLoading(true)
+    setErrorState(null)
+    setWebViewSource(null)
+    setIsTermUrlReached(false) // Reset flag
 
-      if (debug) {
-        console.log('Preparing 3DS form POST to:', data.acsUrl)
-        console.log('TermUrl set to (should be your server endpoint):', termUrl)
-      }
+    if (debug) {
+      console.log('Preparing 3DS form POST to:', data.acsUrl)
+      console.log('TermUrl set to (should be your server endpoint):', termUrl)
+    }
 
-      const formHtml = `
+    const formHtml = `
       <!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body{display:flex;justify-content:center;align-items:center;height:100vh;margin:0;font-family:sans-serif;background-color:#f0f0f0;}.loader{border:5px solid #f3f3f3;border-top:5px solid #3498db;border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite;}@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}</style></head><body><div class="loader"></div><form id="redirectForm" action="${data.acsUrl}" method="POST"><input type="hidden" name="MD" value="${data.transactionId}" /><input type="hidden" name="PaReq" value="${data.paReq}" /><input type="hidden" name="TermUrl" value="${termUrl}" /></form><script>window.onload=function(){try{document.getElementById('redirectForm').submit();if(window.ReactNativeWebView&&window.ReactNativeWebView.postMessage){window.ReactNativeWebView.postMessage(JSON.stringify({type:'log',level:'info',message:'Auto-submitting 3DS form'}));}}catch(e){if(window.ReactNativeWebView&&window.ReactNativeWebView.postMessage){window.ReactNativeWebView.postMessage(JSON.stringify({type:'log',level:'error',message:'Error submitting form: '+e.message}));}}};</script></body></html>
     `
 
-      setWebViewSource({ html: formHtml })
-      onOpen?.()
-    },
-    [termUrl, debug, onOpen, onLoadStart]
-  )
+    setWebViewSource({ html: formHtml })
+    onOpen?.()
+  }
 
   // Effect to prepare the 3DS HTML when data is provided
   useEffect(() => {
@@ -120,9 +115,8 @@ const ThreeDSecureView: React.FC<ThreeDSecureViewProps> = ({
       setIsLoading(false)
       setErrorState(null)
       setIsTermUrlReached(false) // Reset flag
-      onLoadEnd?.()
     }
-  }, [threeDsData, prepareAndShow3DSForm, onLoadEnd])
+  }, [threeDsData])
 
   // Handle navigation state changes
   const handleNavigationStateChange = (navState: WebViewNavigation) => {
@@ -144,7 +138,8 @@ const ThreeDSecureView: React.FC<ThreeDSecureViewProps> = ({
       if (!isTermUrlReached) {
         setIsTermUrlReached(true)
       }
-
+      // Show loader while extracting result
+      setIsLoading(true)
       // If the page has finished loading, inject the script to extract HTML
       if (!loading) {
         if (debug) {
@@ -472,6 +467,7 @@ const ThreeDSecureView: React.FC<ThreeDSecureViewProps> = ({
           )
         )
       }
+      setIsLoading(false)
       onClose?.()
     } else if (postData && postData.type === 'htmlContent') {
       // Process HTML content from our injected script
@@ -492,6 +488,7 @@ const ThreeDSecureView: React.FC<ThreeDSecureViewProps> = ({
 
           // Call the completion handler with the extracted data
           onComplete?.(extractedData)
+          setIsLoading(false)
           onClose?.()
         }
       } catch (error) {
