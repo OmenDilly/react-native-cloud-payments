@@ -1,8 +1,8 @@
 PODS:
   - boost (1.84.0)
-  - Cloudpayments (1.1.6):
+  - Cloudpayments (1.6.1):
     - CloudpaymentsNetworking
-  - CloudpaymentsNetworking (1.0.1)
+  - CloudpaymentsNetworking (1.0.2)
   - DoubleConversion (1.1.6)
   - EXConstants (17.0.8):
     - ExpoModulesCore
@@ -62,7 +62,7 @@ PODS:
   - hermes-engine (0.76.9):
     - hermes-engine/Pre-built (= 0.76.9)
   - hermes-engine/Pre-built (0.76.9)
-  - NitroCloudPayments (0.0.9):
+  - NitroCloudPayments (0.0.10):
     - Cloudpayments
     - DoubleConversion
     - glog
@@ -1905,8 +1905,8 @@ PODS:
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
-  - Cloudpayments (from `https://github.com/cloudpayments/CloudPayments-SDK-iOS`, tag `1.1.9`)
-  - CloudpaymentsNetworking (from `https://github.com/cloudpayments/CloudPayments-SDK-iOS`, tag `1.1.9`)
+  - Cloudpayments (from `https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios`, branch `master`)
+  - CloudpaymentsNetworking (from `https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios`, branch `master`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - Expo (from `../node_modules/expo`)
@@ -2003,11 +2003,11 @@ EXTERNAL SOURCES:
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   Cloudpayments:
-    :git: https://github.com/cloudpayments/CloudPayments-SDK-iOS
-    :tag: 1.1.9
+    :branch: master
+    :git: https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios
   CloudpaymentsNetworking:
-    :git: https://github.com/cloudpayments/CloudPayments-SDK-iOS
-    :tag: 1.1.9
+    :branch: master
+    :git: https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXConstants:
@@ -2182,16 +2182,16 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Cloudpayments:
-    :git: https://github.com/cloudpayments/CloudPayments-SDK-iOS
-    :tag: 1.1.9
+    :commit: 347ba805b5efa01f0647241f895469dd303e25ed
+    :git: https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios
   CloudpaymentsNetworking:
-    :git: https://github.com/cloudpayments/CloudPayments-SDK-iOS
-    :tag: 1.1.9
+    :commit: 347ba805b5efa01f0647241f895469dd303e25ed
+    :git: https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios
 
 SPEC CHECKSUMS:
   boost: 1dca942403ed9342f98334bf4c3621f011aa7946
-  Cloudpayments: a421febed8d07f694a49c74f950ea275f116d098
-  CloudpaymentsNetworking: c888643c447d2ba487ff47300c9ed570f07d41d6
+  Cloudpayments: e4bb33fc4375663cfdc2820a8d64686947634092
+  CloudpaymentsNetworking: 8d7f72b94360dcf3846ac10d9c479ec7a57f19b8
   DoubleConversion: f16ae600a246532c4020132d54af21d0ddb2a385
   EXConstants: fcfc75800824ac2d5c592b5bc74130bad17b146b
   Expo: a6ff273c618506b12129a0d06f2a08201bfbcf43
@@ -2213,7 +2213,7 @@ SPEC CHECKSUMS:
   fmt: 01b82d4ca6470831d1cc0852a1af644be019e8f6
   glog: 08b301085f15bcbb6ff8632a8ebaf239aae04e6a
   hermes-engine: 9e868dc7be781364296d6ee2f56d0c1a9ef0bb11
-  NitroCloudPayments: fb355eb6270d19edcfcd8cd5df4f6555d0ac2367
+  NitroCloudPayments: fb5b3b194c371c7ba2ff913ef4fd4e908d3f2db6
   NitroModules: fdc6fcf8f397091615951004ae81022b759e27bc
   RCT-Folly: ea9d9256ba7f9322ef911169a9f696e5857b9e17
   RCTDeprecation: ebe712bb05077934b16c6bf25228bdec34b64f83
@@ -2279,6 +2279,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: feb4910aba9742cfedc059e2b2902e22ffe9954a
 
-PODFILE CHECKSUM: 819d50c3c71f82e61eaed73262c2fcbedcaf7e80
+PODFILE CHECKSUM: 4c0f8611140fa2e3080423ff1cc8f6a7a3c3fc7d
 
 COCOAPODS: 1.16.2

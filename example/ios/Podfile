@@ -38,8 +38,8 @@ target 'example' do
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
   use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
 
-  pod 'Cloudpayments', :git => 'https://github.com/cloudpayments/CloudPayments-SDK-iOS', :tag => '1.1.9'
-  pod 'CloudpaymentsNetworking', :git => 'https://github.com/cloudpayments/CloudPayments-SDK-iOS', :tag => '1.1.9'
+  pod 'Cloudpayments', :git =>  "https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios", :branch => "master"
+  pod 'CloudpaymentsNetworking', :git =>  "https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios", :branch => "master"
 
   use_react_native!(
     :path => config[:reactNativePath],

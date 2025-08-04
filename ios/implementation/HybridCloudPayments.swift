@@ -34,10 +34,14 @@ class HybridCloudPayments: HybridCloudPaymentsSpec {
         return Promise.async {
             // Using CloudPayments SDK to create a cryptogram
             guard let cryptogram = Card.makeCardCryptogramPacket(
-                with: params.cardNumber,
+                cardNumber: params.cardNumber,
                 expDate: params.expDate,
                 cvv: params.cvv,
-                merchantPublicID: self.publicId
+                merchantPublicID: self.publicId,
+                publicKey: self.publicKey,
+                keyVersion: Int(self.keyVersion)
+
+
             ) else {
                 throw NSError(domain: "CloudPayments", code: 1, userInfo: [
                     NSLocalizedDescriptionKey: "Failed to create card cryptogram packet"

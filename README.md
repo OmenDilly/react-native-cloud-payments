@@ -13,8 +13,8 @@ npm install react-native-cloud-payments
 Add the CloudPayments SDK to your Podfile:
 
 ```ruby
-pod 'Cloudpayments', :git => 'https://github.com/cloudpayments/CloudPayments-SDK-iOS', :tag => '1.1.9'
-pod 'CloudpaymentsNetworking', :git => 'https://github.com/cloudpayments/CloudPayments-SDK-iOS', :tag => '1.1.9'
+  pod 'Cloudpayments', :git =>  "https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios", :branch => "master"
+  pod 'CloudpaymentsNetworking', :git =>  "https://gitpub.cloudpayments.ru/integrations/sdk/cloudpayments-ios", :branch => "master"
 ```
 
 Then run:
