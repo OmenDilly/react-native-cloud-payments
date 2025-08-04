@@ -53,6 +53,10 @@ namespace margelo::nitro::cloudpayments {
     // Methods
     std::shared_ptr<Promise<bool>> initialize(const std::string& publicId, const std::string& publicKey, double keyVersion) override;
     std::shared_ptr<Promise<std::string>> generateCardCryptogram(const CardCryptogramParams& params) override;
+    std::shared_ptr<Promise<bool>> isApplePayAvailable() override;
+    std::shared_ptr<Promise<bool>> isApplePayAvailableWithNetworks(const std::optional<std::vector<std::string>>& networks) override;
+    std::shared_ptr<Promise<ApplePayResult>> requestApplePayPayment(const ApplePayParams& params) override;
+    std::shared_ptr<Promise<std::string>> getMerchantIdFromEntitlements() override;
 
   private:
     friend HybridBase;

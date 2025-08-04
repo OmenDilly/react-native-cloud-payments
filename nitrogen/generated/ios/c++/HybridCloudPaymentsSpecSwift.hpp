@@ -14,10 +14,18 @@ namespace NitroCloudPayments { class HybridCloudPaymentsSpec_cxx; }
 
 // Forward declaration of `CardCryptogramParams` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { struct CardCryptogramParams; }
+// Forward declaration of `ApplePayResult` to properly resolve imports.
+namespace margelo::nitro::cloudpayments { struct ApplePayResult; }
+// Forward declaration of `ApplePayParams` to properly resolve imports.
+namespace margelo::nitro::cloudpayments { struct ApplePayParams; }
 
 #include <NitroModules/Promise.hpp>
 #include <string>
 #include "CardCryptogramParams.hpp"
+#include <optional>
+#include <vector>
+#include "ApplePayResult.hpp"
+#include "ApplePayParams.hpp"
 
 #include "NitroCloudPayments-Swift-Cxx-Umbrella.hpp"
 
@@ -68,6 +76,38 @@ namespace margelo::nitro::cloudpayments {
     }
     inline std::shared_ptr<Promise<std::string>> generateCardCryptogram(const CardCryptogramParams& params) override {
       auto __result = _swiftPart.generateCardCryptogram(params);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline std::shared_ptr<Promise<bool>> isApplePayAvailable() override {
+      auto __result = _swiftPart.isApplePayAvailable();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline std::shared_ptr<Promise<bool>> isApplePayAvailableWithNetworks(const std::optional<std::vector<std::string>>& networks) override {
+      auto __result = _swiftPart.isApplePayAvailableWithNetworks(networks);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline std::shared_ptr<Promise<ApplePayResult>> requestApplePayPayment(const ApplePayParams& params) override {
+      auto __result = _swiftPart.requestApplePayPayment(params);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline std::shared_ptr<Promise<std::string>> getMerchantIdFromEntitlements() override {
+      auto __result = _swiftPart.getMerchantIdFromEntitlements();
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

@@ -1,6 +1,6 @@
 # react-native-cloud-payments
 
-A React Native wrapper for CloudPayments SDK that allows you to generate cryptograms for card payments.
+A React Native wrapper for CloudPayments SDK that allows you to generate cryptograms for card payments and process Apple Pay payments.
 
 ## Installation
 
@@ -22,6 +22,31 @@ Then run:
 ```sh
 cd ios && pod install
 ```
+
+#### Apple Pay Setup (iOS only)
+
+To enable Apple Pay, you need to:
+
+1. **Add Apple Pay capability** in Xcode:
+   - Open your project in Xcode
+   - Select your target
+   - Go to "Signing & Capabilities"
+   - Click "+" and add "Apple Pay"
+
+2. **Configure your Info.plist**:
+   ```xml
+   <key>PKPaymentNetworks</key>
+   <array>
+       <string>visa</string>
+       <string>mastercard</string>
+       <string>amex</string>
+   </array>
+   ```
+
+3. **Set up Apple Pay in your Apple Developer account**:
+   - Create a Merchant ID
+   - Configure payment processing certificates
+   - Add the Merchant ID to your app's capabilities
 
 ### Android setup
 
@@ -95,6 +120,8 @@ This module uses Nitro, a high-performance framework for building native modules
 
 ## Usage
 
+### Basic Card Payment
+
 ```javascript
 import { CloudPaymentsModule } from 'react-native-cloud-payments';
 
@@ -117,7 +144,97 @@ console.log('Card number is valid:', isValid);
 // Validate expiration date
 const isValidDate = await CloudPaymentsModule.isExpDateValid('12/25');
 console.log('Expiration date is valid:', isValidDate);
+```
 
+### Apple Pay Integration
+
+Apple Pay is available on iOS devices and provides a secure, convenient way to process payments.
+
+#### Using the ApplePayButton Component
+
+```javascript
+import { ApplePayButton } from 'react-native-cloud-payments';
+
+const PaymentScreen = () => {
+  const handleApplePaySuccess = (result) => {
+    console.log('Apple Pay successful:', result.cryptogram);
+    // Use the cryptogram to complete the payment with CloudPayments API
+  };
+
+  const handleApplePayError = (error) => {
+    console.error('Apple Pay error:', error);
+  };
+
+  const handleApplePayCancel = () => {
+    console.log('Apple Pay cancelled');
+  };
+
+  return (
+    <ApplePayButton
+      merchantId="merchant.com.yourdomain"
+      amount={1000} // Amount in smallest currency unit (e.g., cents)
+      currency="RUB"
+      description="Payment for goods"
+      countryCode="RU"
+      supportedNetworks={['visa', 'mastercard']}
+      merchantCapabilities={['3ds']}
+      onSuccess={handleApplePaySuccess}
+      onError={handleApplePayError}
+      onCancel={handleApplePayCancel}
+    />
+  );
+};
+```
+
+#### Using the Module Directly
+
+```javascript
+import { CloudPaymentsModule } from 'react-native-cloud-payments';
+
+const requestApplePay = async () => {
+  try {
+    // Check if Apple Pay is available
+    const isAvailable = await CloudPaymentsModule.isApplePayAvailable();
+
+    if (!isAvailable) {
+      console.log('Apple Pay is not available');
+      return;
+    }
+
+    // Request Apple Pay payment
+    const result = await CloudPaymentsModule.requestApplePayPayment({
+      merchantId: 'merchant.com.yourdomain',
+      amount: 1000,
+      currency: 'RUB',
+      description: 'Payment for goods',
+      countryCode: 'RU',
+      supportedNetworks: ['visa', 'mastercard'],
+      merchantCapabilities: ['3ds'],
+    });
+
+    if (result.success) {
+      console.log('Payment successful:', result.cryptogram);
+      // Use the cryptogram with CloudPayments API
+    } else {
+      console.error('Payment failed:', result.error);
+    }
+  } catch (error) {
+    console.error('Apple Pay error:', error);
+  }
+};
+```
+
+### 3D Secure Authentication
+
+When processing payments, you may need to handle 3D Secure (3DS) authentication as required by many banks. This module provides native implementation for 3DS processing:
+
+1. After attempting a payment using a cryptogram, your server may receive a 3DS response from CloudPayments
+2. Pass the 3DS parameters (transactionId, paReq, acsUrl) to your React Native app
+3. Call the `show3ds` method to show the 3DS authentication dialog to the user
+4. The method returns a Promise that resolves when the authentication is complete with result information
+5. Use the PaRes value in the result to complete the payment process through your server
+
+```javascript
 // Process 3D Secure (3DS) authentication
 const threeDsResult = await CloudPaymentsModule.show3ds({
   transactionId: 'your-transaction-id', // Transaction ID from CloudPayments
@@ -136,19 +253,13 @@ if (threeDsResult.success) {
 }
 ```
 
-### 3D Secure Authentication
-
-When processing payments, you may need to handle 3D Secure (3DS) authentication as required by many banks. This module provides native implementation for 3DS processing:
-
-1. After attempting a payment using a cryptogram, your server may receive a 3DS response from CloudPayments
-2. Pass the 3DS parameters (transactionId, paReq, acsUrl) to your React Native app
-3. Call the `show3ds` method to show the 3DS authentication dialog to the user
-4. The method returns a Promise that resolves when the authentication is complete with result information
-5. Use the PaRes value in the result to complete the payment process through your server
-
 ## Use with your server
 
-After generating the cryptogram, you should send it to your server which will make a request to the CloudPayments API to process the payment. Do not use CloudPayments API keys directly in your app.
+After generating the cryptogram (from either card payment or Apple Pay), you should send it to your server which will make a request to the CloudPayments API to process the payment. Do not use CloudPayments API keys directly in your app.
+
+## Apple Pay Documentation
+
+For detailed Apple Pay integration information, see [APPLE_PAY.md](APPLE_PAY.md).
 
 ## Contributing
 

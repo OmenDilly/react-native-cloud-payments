@@ -8,19 +8,27 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `ApplePayParams` to properly resolve imports.
+namespace margelo::nitro::cloudpayments { struct ApplePayParams; }
+// Forward declaration of `ApplePayResult` to properly resolve imports.
+namespace margelo::nitro::cloudpayments { struct ApplePayResult; }
 // Forward declaration of `CardCryptogramParams` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { struct CardCryptogramParams; }
 // Forward declaration of `HybridCloudPaymentsSpec` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { class HybridCloudPaymentsSpec; }
 
 // Include C++ defined types
+#include "ApplePayParams.hpp"
+#include "ApplePayResult.hpp"
 #include "CardCryptogramParams.hpp"
 #include "HybridCloudPaymentsSpec.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
+#include <optional>
 #include <string>
+#include <vector>
 
 // C++ helpers for Swift
 #include "NitroCloudPayments-Swift-Cxx-Bridge.hpp"

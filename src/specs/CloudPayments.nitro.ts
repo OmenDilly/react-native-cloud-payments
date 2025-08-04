@@ -10,12 +10,32 @@ export interface CloudPayments
     keyVersion: number
   ): Promise<boolean>
   generateCardCryptogram(params: CardCryptogramParams): Promise<string>
+  // Apple Pay methods
+  isApplePayAvailable(): Promise<boolean>
+  isApplePayAvailableWithNetworks(networks?: string[]): Promise<boolean>
+  requestApplePayPayment(params: ApplePayParams): Promise<ApplePayResult>
 }
 
 export interface CardCryptogramParams {
   cardNumber: string
   expDate: string
   cvv: string
+}
+
+export interface ApplePayParams {
+  merchantId: string
+  amount: number
+  currency: string
+  description: string
+  countryCode?: string
+  supportedNetworks?: string[]
+  merchantCapabilities?: string[]
+}
+
+export interface ApplePayResult {
+  success: boolean
+  cryptogram?: string
+  error?: string
 }
 
 export interface ThreeDsParams {

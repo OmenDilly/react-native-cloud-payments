@@ -7,14 +7,24 @@
 
 #include "JHybridCloudPaymentsSpec.hpp"
 
+// Forward declaration of `ApplePayResult` to properly resolve imports.
+namespace margelo::nitro::cloudpayments { struct ApplePayResult; }
 // Forward declaration of `CardCryptogramParams` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { struct CardCryptogramParams; }
+// Forward declaration of `ApplePayParams` to properly resolve imports.
+namespace margelo::nitro::cloudpayments { struct ApplePayParams; }
 
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/JPromise.hpp>
 #include <string>
+#include "ApplePayResult.hpp"
+#include "JApplePayResult.hpp"
+#include <optional>
 #include "CardCryptogramParams.hpp"
 #include "JCardCryptogramParams.hpp"
+#include <vector>
+#include "ApplePayParams.hpp"
+#include "JApplePayParams.hpp"
 
 namespace margelo::nitro::cloudpayments {
 
@@ -56,6 +66,78 @@ namespace margelo::nitro::cloudpayments {
   std::shared_ptr<Promise<std::string>> JHybridCloudPaymentsSpec::generateCardCryptogram(const CardCryptogramParams& params) {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<JCardCryptogramParams> /* params */)>("generateCardCryptogram");
     auto __result = method(_javaPart, JCardCryptogramParams::fromCpp(params));
+    return [&]() {
+      auto __promise = Promise<std::string>::create();
+      __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
+        auto __result = jni::static_ref_cast<jni::JString>(__boxedResult);
+        __promise->resolve(__result->toStdString());
+      });
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
+      });
+      return __promise;
+    }();
+  }
+  std::shared_ptr<Promise<bool>> JHybridCloudPaymentsSpec::isApplePayAvailable() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>()>("isApplePayAvailable");
+    auto __result = method(_javaPart);
+    return [&]() {
+      auto __promise = Promise<bool>::create();
+      __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
+        auto __result = jni::static_ref_cast<jni::JBoolean>(__boxedResult);
+        __promise->resolve(static_cast<bool>(__result->value()));
+      });
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
+      });
+      return __promise;
+    }();
+  }
+  std::shared_ptr<Promise<bool>> JHybridCloudPaymentsSpec::isApplePayAvailableWithNetworks(const std::optional<std::vector<std::string>>& networks) {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JArrayClass<jni::JString>> /* networks */)>("isApplePayAvailableWithNetworks");
+    auto __result = method(_javaPart, networks.has_value() ? [&]() {
+      size_t __size = networks.value().size();
+      jni::local_ref<jni::JArrayClass<jni::JString>> __array = jni::JArrayClass<jni::JString>::newArray(__size);
+      for (size_t __i = 0; __i < __size; __i++) {
+        const auto& __element = networks.value()[__i];
+        __array->setElement(__i, *jni::make_jstring(__element));
+      }
+      return __array;
+    }() : nullptr);
+    return [&]() {
+      auto __promise = Promise<bool>::create();
+      __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
+        auto __result = jni::static_ref_cast<jni::JBoolean>(__boxedResult);
+        __promise->resolve(static_cast<bool>(__result->value()));
+      });
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
+      });
+      return __promise;
+    }();
+  }
+  std::shared_ptr<Promise<ApplePayResult>> JHybridCloudPaymentsSpec::requestApplePayPayment(const ApplePayParams& params) {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<JApplePayParams> /* params */)>("requestApplePayPayment");
+    auto __result = method(_javaPart, JApplePayParams::fromCpp(params));
+    return [&]() {
+      auto __promise = Promise<ApplePayResult>::create();
+      __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
+        auto __result = jni::static_ref_cast<JApplePayResult>(__boxedResult);
+        __promise->resolve(__result->toCpp());
+      });
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
+      });
+      return __promise;
+    }();
+  }
+  std::shared_ptr<Promise<std::string>> JHybridCloudPaymentsSpec::getMerchantIdFromEntitlements() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>()>("getMerchantIdFromEntitlements");
+    auto __result = method(_javaPart);
     return [&]() {
       auto __promise = Promise<std::string>::create();
       __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {

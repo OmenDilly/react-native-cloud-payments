@@ -37,6 +37,14 @@ namespace margelo::nitro::cloudpayments::bridge::swift {
     };
   }
   
+  // pragma MARK: std::function<void(const ApplePayResult& /* result */)>
+  Func_void_ApplePayResult create_Func_void_ApplePayResult(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = NitroCloudPayments::Func_void_ApplePayResult::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const ApplePayResult& result) mutable -> void {
+      swiftClosure.call(result);
+    };
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::cloudpayments::HybridCloudPaymentsSpec>
   std::shared_ptr<margelo::nitro::cloudpayments::HybridCloudPaymentsSpec> create_std__shared_ptr_margelo__nitro__cloudpayments__HybridCloudPaymentsSpec_(void* _Nonnull swiftUnsafePointer) {
     NitroCloudPayments::HybridCloudPaymentsSpec_cxx swiftPart = NitroCloudPayments::HybridCloudPaymentsSpec_cxx::fromUnsafe(swiftUnsafePointer);

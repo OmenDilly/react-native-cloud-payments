@@ -47,6 +47,22 @@ abstract class HybridCloudPaymentsSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun generateCardCryptogram(params: CardCryptogramParams): Promise<String>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun isApplePayAvailable(): Promise<Boolean>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun isApplePayAvailableWithNetworks(networks: Array<String>?): Promise<Boolean>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun requestApplePayPayment(params: ApplePayParams): Promise<ApplePayResult>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun getMerchantIdFromEntitlements(): Promise<String>
 
   private external fun initHybrid(): HybridData
 

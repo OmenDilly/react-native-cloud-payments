@@ -1,8 +1,13 @@
 import { PortalProvider } from '@gorhom/portal'
-import { CloudPaymentsModule } from '@omendilly/react-native-cloud-payments'
+import {
+  ApplePayResult,
+  CloudPaymentsModule,
+} from '@omendilly/react-native-cloud-payments'
+import { router } from 'expo-router'
 import React, { useState } from 'react'
 import {
   Alert,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -20,18 +25,16 @@ const App = () => {
   const [expDate, setExpDate] = useState('12/25')
   const [cvv, setCvv] = useState('123')
 
-  // Charge params
-  const [amount, setAmount] = useState('1.00')
-  const [currency, setCurrency] = useState('RUB')
-  const [description, setDescription] = useState('Test payment')
-  const [email, setEmail] = useState('')
-
   const [initialized, setInitialized] = useState(false)
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState('')
 
   const initialize = async () => {
     try {
+      if (!publicId) {
+        Alert.alert('Error', 'Please enter a public ID')
+        return
+      }
       setLoading(true)
       const publicKeyData = await fetch(
         'https://api.cloudpayments.ru/payments/publickey'
@@ -74,6 +77,29 @@ const App = () => {
     } finally {
       setLoading(false)
     }
+  }
+
+  const checkApplePayAvailability = async () => {
+    try {
+      const isAvailable = await CloudPaymentsModule.isApplePayAvailable()
+      setResult(
+        `Apple Pay is ${isAvailable ? 'available' : 'not available'} on this device`
+      )
+    } catch (error: any) {
+      setResult(`Error checking Apple Pay availability: ${error.message}`)
+    }
+  }
+
+  const handleApplePaySuccess = (result: ApplePayResult) => {
+    setResult(`Apple Pay successful! Cryptogram: ${result.cryptogram}`)
+  }
+
+  const handleApplePayError = (error: string) => {
+    setResult(`Apple Pay error: ${error}`)
+  }
+
+  const handleApplePayCancel = () => {
+    setResult('Apple Pay payment was cancelled')
   }
 
   return (
@@ -149,61 +175,48 @@ const App = () => {
               </TouchableOpacity>
             </View>
 
-            {/* Direct Charge Section */}
-            {/* <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Direct Payment</Text>
+            {/* Apple Pay Section */}
+            {Platform.OS === 'ios' && (
+              <View style={styles.sectionContainer}>
+                <Text style={styles.sectionTitle}>Apple Pay</Text>
 
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>Amount:</Text>
-                <TextInput
-                  style={styles.input}
-                  value={amount}
-                  onChangeText={setAmount}
-                  placeholder="1.00"
-                  keyboardType="decimal-pad"
-                />
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => router.navigate('/ApplePayExample')}
+                >
+                  <Text style={styles.buttonText}>Test Apple Pay</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() =>
+                    router.navigate('/ApplePaySubscriptionExample')
+                  }
+                >
+                  <Text style={styles.buttonText}>
+                    Test Apple Pay Subscription
+                  </Text>
+                </TouchableOpacity>
+                {/*
+                <View style={styles.applePayContainer}>
+                  <
+                  <ApplePayButton
+                    merchantId="merchant.trenera.trenerapro" // Replace with your actual merchant ID
+                    amount={100} // 100 RUB in kopecks
+                    currency="RUB"
+                    description="Test payment for CloudPayments SDK"
+                    countryCode="RU"
+                    supportedNetworks={['visa', 'mastercard']}
+                    merchantCapabilities={['3ds']}
+                    onSuccess={handleApplePaySuccess}
+                    onError={handleApplePayError}
+                    onCancel={handleApplePayCancel}
+                    disabled={loading}
+                    style={styles.applePayButton}
+                  />
+                </View> */}
               </View>
-
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>Currency:</Text>
-                <TextInput
-                  style={styles.input}
-                  value={currency}
-                  onChangeText={setCurrency}
-                  placeholder="RUB"
-                />
-              </View>
-
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>Description:</Text>
-                <TextInput
-                  style={styles.input}
-                  value={description}
-                  onChangeText={setDescription}
-                  placeholder="Test payment"
-                />
-              </View>
-
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>Email (optional):</Text>
-                <TextInput
-                  style={styles.input}
-                  value={email}
-                  onChangeText={setEmail}
-                  placeholder="customer@example.com"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                />
-              </View>
-            </View>
-
-            {loading && (
-              <ActivityIndicator
-                size="large"
-                color="#0066cc"
-                style={styles.loader}
-              />
-            )} */}
+            )}
           </ScrollView>
 
           <View style={styles.resultContainer}>
@@ -307,6 +320,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 16,
+  },
+  applePayContainer: {
+    marginTop: 16,
+  },
+  applePayButton: {
+    marginTop: 8,
   },
 })
 

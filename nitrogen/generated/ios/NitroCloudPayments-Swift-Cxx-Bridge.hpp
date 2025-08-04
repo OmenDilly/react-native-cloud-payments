@@ -8,6 +8,8 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `ApplePayResult` to properly resolve imports.
+namespace margelo::nitro::cloudpayments { struct ApplePayResult; }
 // Forward declaration of `HybridCloudPaymentsSpec` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { class HybridCloudPaymentsSpec; }
 
@@ -16,6 +18,7 @@ namespace margelo::nitro::cloudpayments { class HybridCloudPaymentsSpec; }
 namespace NitroCloudPayments { class HybridCloudPaymentsSpec_cxx; }
 
 // Include C++ defined types
+#include "ApplePayResult.hpp"
 #include "HybridCloudPaymentsSpec.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/PromiseHolder.hpp>
@@ -23,7 +26,9 @@ namespace NitroCloudPayments { class HybridCloudPaymentsSpec_cxx; }
 #include <exception>
 #include <functional>
 #include <memory>
+#include <optional>
 #include <string>
+#include <vector>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -121,6 +126,69 @@ namespace margelo::nitro::cloudpayments::bridge::swift {
     return Func_void_std__string_Wrapper(std::move(value));
   }
   
+  // pragma MARK: std::vector<std::string>
+  /**
+   * Specialized version of `std::vector<std::string>`.
+   */
+  using std__vector_std__string_ = std::vector<std::string>;
+  inline std::vector<std::string> create_std__vector_std__string_(size_t size) {
+    std::vector<std::string> vector;
+    vector.reserve(size);
+    return vector;
+  }
+  
+  // pragma MARK: std::optional<std::vector<std::string>>
+  /**
+   * Specialized version of `std::optional<std::vector<std::string>>`.
+   */
+  using std__optional_std__vector_std__string__ = std::optional<std::vector<std::string>>;
+  inline std::optional<std::vector<std::string>> create_std__optional_std__vector_std__string__(const std::vector<std::string>& value) {
+    return std::optional<std::vector<std::string>>(value);
+  }
+  
+  // pragma MARK: std::optional<std::string>
+  /**
+   * Specialized version of `std::optional<std::string>`.
+   */
+  using std__optional_std__string_ = std::optional<std::string>;
+  inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) {
+    return std::optional<std::string>(value);
+  }
+  
+  // pragma MARK: std::shared_ptr<Promise<ApplePayResult>>
+  /**
+   * Specialized version of `std::shared_ptr<Promise<ApplePayResult>>`.
+   */
+  using std__shared_ptr_Promise_ApplePayResult__ = std::shared_ptr<Promise<ApplePayResult>>;
+  inline std::shared_ptr<Promise<ApplePayResult>> create_std__shared_ptr_Promise_ApplePayResult__() {
+    return Promise<ApplePayResult>::create();
+  }
+  inline PromiseHolder<ApplePayResult> wrap_std__shared_ptr_Promise_ApplePayResult__(std::shared_ptr<Promise<ApplePayResult>> promise) {
+    return PromiseHolder<ApplePayResult>(std::move(promise));
+  }
+  
+  // pragma MARK: std::function<void(const ApplePayResult& /* result */)>
+  /**
+   * Specialized version of `std::function<void(const ApplePayResult&)>`.
+   */
+  using Func_void_ApplePayResult = std::function<void(const ApplePayResult& /* result */)>;
+  /**
+   * Wrapper class for a `std::function<void(const ApplePayResult& / * result * /)>`, this can be used from Swift.
+   */
+  class Func_void_ApplePayResult_Wrapper final {
+  public:
+    explicit Func_void_ApplePayResult_Wrapper(std::function<void(const ApplePayResult& /* result */)>&& func): _function(std::make_shared<std::function<void(const ApplePayResult& /* result */)>>(std::move(func))) {}
+    inline void call(ApplePayResult result) const {
+      _function->operator()(result);
+    }
+  private:
+    std::shared_ptr<std::function<void(const ApplePayResult& /* result */)>> _function;
+  };
+  Func_void_ApplePayResult create_Func_void_ApplePayResult(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_ApplePayResult_Wrapper wrap_Func_void_ApplePayResult(Func_void_ApplePayResult value) {
+    return Func_void_ApplePayResult_Wrapper(std::move(value));
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::cloudpayments::HybridCloudPaymentsSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::cloudpayments::HybridCloudPaymentsSpec>`.
@@ -149,6 +217,15 @@ namespace margelo::nitro::cloudpayments::bridge::swift {
   }
   inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::exception_ptr& error) {
     return Result<std::shared_ptr<Promise<std::string>>>::withError(error);
+  }
+  
+  // pragma MARK: Result<std::shared_ptr<Promise<ApplePayResult>>>
+  using Result_std__shared_ptr_Promise_ApplePayResult___ = Result<std::shared_ptr<Promise<ApplePayResult>>>;
+  inline Result_std__shared_ptr_Promise_ApplePayResult___ create_Result_std__shared_ptr_Promise_ApplePayResult___(const std::shared_ptr<Promise<ApplePayResult>>& value) {
+    return Result<std::shared_ptr<Promise<ApplePayResult>>>::withValue(value);
+  }
+  inline Result_std__shared_ptr_Promise_ApplePayResult___ create_Result_std__shared_ptr_Promise_ApplePayResult___(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<Promise<ApplePayResult>>>::withError(error);
   }
 
 } // namespace margelo::nitro::cloudpayments::bridge::swift

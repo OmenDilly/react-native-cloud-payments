@@ -72,4 +72,22 @@ class HybridCloudPayments: HybridCloudPaymentsSpec() {
             }
         }
     }
+
+    override fun isApplePayAvailable(): Promise<Boolean> {
+        return Promise.async {
+            // Apple Pay is iOS-only, so it's never available on Android
+            false
+        }
+    }
+
+    override fun requestApplePayPayment(params: ApplePayParams): Promise<ApplePayResult> {
+        return Promise.async {
+            // Apple Pay is iOS-only, so return an error on Android
+            ApplePayResult(
+                success = false,
+                cryptogram = null,
+                error = "Apple Pay is not available on Android devices"
+            )
+        }
+    }
 }

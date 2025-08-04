@@ -1,5 +1,7 @@
 import { NitroModules } from 'react-native-nitro-modules'
 import type {
+  ApplePayParams,
+  ApplePayResult,
   CardCryptogramParams,
   ChargeParams,
   ChargeResult,
@@ -16,8 +18,13 @@ export type {
   ThreeDSecureViewProps,
 } from './ui/components/ThreeDSecureView'
 
+export { default as ApplePayButton } from './ui/components/ApplePayButton'
+export type { ApplePayButtonProps } from './ui/components/ApplePayButton'
+
 // Export types
 export type {
+  ApplePayParams,
+  ApplePayResult,
   CardCryptogramParams,
   ChargeParams,
   ChargeResult,

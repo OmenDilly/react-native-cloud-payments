@@ -16,6 +16,10 @@ public protocol HybridCloudPaymentsSpec_protocol: HybridObject {
   // Methods
   func initialize(publicId: String, publicKey: String, keyVersion: Double) throws -> Promise<Bool>
   func generateCardCryptogram(params: CardCryptogramParams) throws -> Promise<String>
+  func isApplePayAvailable() throws -> Promise<Bool>
+  func isApplePayAvailableWithNetworks(networks: [String]?) throws -> Promise<Bool>
+  func requestApplePayPayment(params: ApplePayParams) throws -> Promise<ApplePayResult>
+  func getMerchantIdFromEntitlements() throws -> Promise<String>
 }
 
 /// See ``HybridCloudPaymentsSpec``
