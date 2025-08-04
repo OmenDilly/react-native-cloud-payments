@@ -64,7 +64,6 @@ namespace margelo::nitro::cloudpayments {
       virtual std::shared_ptr<Promise<bool>> isApplePayAvailable() = 0;
       virtual std::shared_ptr<Promise<bool>> isApplePayAvailableWithNetworks(const std::optional<std::vector<std::string>>& networks) = 0;
       virtual std::shared_ptr<Promise<ApplePayResult>> requestApplePayPayment(const ApplePayParams& params) = 0;
-      virtual std::shared_ptr<Promise<std::string>> getMerchantIdFromEntitlements() = 0;
 
     protected:
       // Hybrid Setup

@@ -19,7 +19,6 @@ namespace margelo::nitro::cloudpayments {
       prototype.registerHybridMethod("isApplePayAvailable", &HybridCloudPaymentsSpec::isApplePayAvailable);
       prototype.registerHybridMethod("isApplePayAvailableWithNetworks", &HybridCloudPaymentsSpec::isApplePayAvailableWithNetworks);
       prototype.registerHybridMethod("requestApplePayPayment", &HybridCloudPaymentsSpec::requestApplePayPayment);
-      prototype.registerHybridMethod("getMerchantIdFromEntitlements", &HybridCloudPaymentsSpec::getMerchantIdFromEntitlements);
     });
   }
 

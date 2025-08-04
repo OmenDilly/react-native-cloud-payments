@@ -20,7 +20,7 @@ data class ApplePayParams
   @DoNotStrip
   @Keep
   constructor(
-    val merchantId: String?,
+    val merchantId: String,
     val amount: Double,
     val currency: String,
     val description: String,

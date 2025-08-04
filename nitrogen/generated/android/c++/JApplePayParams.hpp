@@ -48,7 +48,7 @@ namespace margelo::nitro::cloudpayments {
       static const auto fieldMerchantCapabilities = clazz->getField<jni::JArrayClass<jni::JString>>("merchantCapabilities");
       jni::local_ref<jni::JArrayClass<jni::JString>> merchantCapabilities = this->getFieldValue(fieldMerchantCapabilities);
       return ApplePayParams(
-        merchantId != nullptr ? std::make_optional(merchantId->toStdString()) : std::nullopt,
+        merchantId->toStdString(),
         amount,
         currency->toStdString(),
         description->toStdString(),
@@ -83,7 +83,7 @@ namespace margelo::nitro::cloudpayments {
     [[maybe_unused]]
     static jni::local_ref<JApplePayParams::javaobject> fromCpp(const ApplePayParams& value) {
       return newInstance(
-        value.merchantId.has_value() ? jni::make_jstring(value.merchantId.value()) : nullptr,
+        jni::make_jstring(value.merchantId),
         value.amount,
         jni::make_jstring(value.currency),
         jni::make_jstring(value.description),

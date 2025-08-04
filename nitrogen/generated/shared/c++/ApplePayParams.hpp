@@ -20,8 +20,8 @@
 
 
 
-#include <optional>
 #include <string>
+#include <optional>
 #include <vector>
 
 namespace margelo::nitro::cloudpayments {
@@ -31,7 +31,7 @@ namespace margelo::nitro::cloudpayments {
    */
   struct ApplePayParams {
   public:
-    std::optional<std::string> merchantId     SWIFT_PRIVATE;
+    std::string merchantId     SWIFT_PRIVATE;
     double amount     SWIFT_PRIVATE;
     std::string currency     SWIFT_PRIVATE;
     std::string description     SWIFT_PRIVATE;
@@ -41,7 +41,7 @@ namespace margelo::nitro::cloudpayments {
 
   public:
     ApplePayParams() = default;
-    explicit ApplePayParams(std::optional<std::string> merchantId, double amount, std::string currency, std::string description, std::optional<std::string> countryCode, std::optional<std::vector<std::string>> supportedNetworks, std::optional<std::vector<std::string>> merchantCapabilities): merchantId(merchantId), amount(amount), currency(currency), description(description), countryCode(countryCode), supportedNetworks(supportedNetworks), merchantCapabilities(merchantCapabilities) {}
+    explicit ApplePayParams(std::string merchantId, double amount, std::string currency, std::string description, std::optional<std::string> countryCode, std::optional<std::vector<std::string>> supportedNetworks, std::optional<std::vector<std::string>> merchantCapabilities): merchantId(merchantId), amount(amount), currency(currency), description(description), countryCode(countryCode), supportedNetworks(supportedNetworks), merchantCapabilities(merchantCapabilities) {}
   };
 
 } // namespace margelo::nitro::cloudpayments
@@ -56,7 +56,7 @@ namespace margelo::nitro {
     static inline ApplePayParams fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
       jsi::Object obj = arg.asObject(runtime);
       return ApplePayParams(
-        JSIConverter<std::optional<std::string>>::fromJSI(runtime, obj.getProperty(runtime, "merchantId")),
+        JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, "merchantId")),
         JSIConverter<double>::fromJSI(runtime, obj.getProperty(runtime, "amount")),
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, "currency")),
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, "description")),
@@ -67,7 +67,7 @@ namespace margelo::nitro {
     }
     static inline jsi::Value toJSI(jsi::Runtime& runtime, const ApplePayParams& arg) {
       jsi::Object obj(runtime);
-      obj.setProperty(runtime, "merchantId", JSIConverter<std::optional<std::string>>::toJSI(runtime, arg.merchantId));
+      obj.setProperty(runtime, "merchantId", JSIConverter<std::string>::toJSI(runtime, arg.merchantId));
       obj.setProperty(runtime, "amount", JSIConverter<double>::toJSI(runtime, arg.amount));
       obj.setProperty(runtime, "currency", JSIConverter<std::string>::toJSI(runtime, arg.currency));
       obj.setProperty(runtime, "description", JSIConverter<std::string>::toJSI(runtime, arg.description));
@@ -81,7 +81,7 @@ namespace margelo::nitro {
         return false;
       }
       jsi::Object obj = value.getObject(runtime);
-      if (!JSIConverter<std::optional<std::string>>::canConvert(runtime, obj.getProperty(runtime, "merchantId"))) return false;
+      if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, "merchantId"))) return false;
       if (!JSIConverter<double>::canConvert(runtime, obj.getProperty(runtime, "amount"))) return false;
       if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, "currency"))) return false;
       if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, "description"))) return false;

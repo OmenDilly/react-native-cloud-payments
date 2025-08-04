@@ -106,14 +106,6 @@ namespace margelo::nitro::cloudpayments {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline std::shared_ptr<Promise<std::string>> getMerchantIdFromEntitlements() override {
-      auto __result = _swiftPart.getMerchantIdFromEntitlements();
-      if (__result.hasError()) [[unlikely]] {
-        std::rethrow_exception(__result.error());
-      }
-      auto __value = std::move(__result.value());
-      return __value;
-    }
 
   private:
     NitroCloudPayments::HybridCloudPaymentsSpec_cxx _swiftPart;

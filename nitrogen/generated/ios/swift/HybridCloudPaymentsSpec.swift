@@ -19,7 +19,6 @@ public protocol HybridCloudPaymentsSpec_protocol: HybridObject {
   func isApplePayAvailable() throws -> Promise<Bool>
   func isApplePayAvailableWithNetworks(networks: [String]?) throws -> Promise<Bool>
   func requestApplePayPayment(params: ApplePayParams) throws -> Promise<ApplePayResult>
-  func getMerchantIdFromEntitlements() throws -> Promise<String>
 }
 
 /// See ``HybridCloudPaymentsSpec``

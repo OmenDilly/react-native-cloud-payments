@@ -59,10 +59,6 @@ abstract class HybridCloudPaymentsSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun requestApplePayPayment(params: ApplePayParams): Promise<ApplePayResult>
-  
-  @DoNotStrip
-  @Keep
-  abstract fun getMerchantIdFromEntitlements(): Promise<String>
 
   private external fun initHybrid(): HybridData
 

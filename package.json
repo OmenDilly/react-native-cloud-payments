@@ -31,8 +31,7 @@
     "clean": "rm -rf android/build node_modules/**/android/build lib",
     "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
     "typescript": "tsc",
-    "specs": "tsc && nitro-codegen --logLevel=\"debug\"",
-    "publish": "git add . && git commit -m \"chore: publish\" && git push && npm publish --access public"
+    "specs": "tsc && nitro-codegen --logLevel=\"debug\""
   },
   "keywords": [
     "react-native",

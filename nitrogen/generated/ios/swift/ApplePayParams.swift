@@ -18,14 +18,8 @@ public extension ApplePayParams {
   /**
    * Create a new instance of `ApplePayParams`.
    */
-  init(merchantId: String?, amount: Double, currency: String, description: String, countryCode: String?, supportedNetworks: [String]?, merchantCapabilities: [String]?) {
-    self.init({ () -> bridge.std__optional_std__string_ in
-      if let __unwrappedValue = merchantId {
-        return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
-      } else {
-        return .init()
-      }
-    }(), amount, std.string(currency), std.string(description), { () -> bridge.std__optional_std__string_ in
+  init(merchantId: String, amount: Double, currency: String, description: String, countryCode: String?, supportedNetworks: [String]?, merchantCapabilities: [String]?) {
+    self.init(std.string(merchantId), amount, std.string(currency), std.string(description), { () -> bridge.std__optional_std__string_ in
       if let __unwrappedValue = countryCode {
         return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
       } else {
@@ -58,26 +52,14 @@ public extension ApplePayParams {
     }())
   }
 
-  var merchantId: String? {
+  var merchantId: String {
     @inline(__always)
     get {
-      return { () -> String? in
-        if let __unwrapped = self.__merchantId.value {
-          return String(__unwrapped)
-        } else {
-          return nil
-        }
-      }()
+      return String(self.__merchantId)
     }
     @inline(__always)
     set {
-      self.__merchantId = { () -> bridge.std__optional_std__string_ in
-        if let __unwrappedValue = newValue {
-          return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
-        } else {
-          return .init()
-        }
-      }()
+      self.__merchantId = std.string(newValue)
     }
   }
   
