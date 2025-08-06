@@ -197,24 +197,13 @@ const App = () => {
                     Test Apple Pay Subscription
                   </Text>
                 </TouchableOpacity>
-                {/*
-                <View style={styles.applePayContainer}>
-                  <
-                  <ApplePayButton
-                    merchantId="merchant.trenera.trenerapro" // Replace with your actual merchant ID
-                    amount={100} // 100 RUB in kopecks
-                    currency="RUB"
-                    description="Test payment for CloudPayments SDK"
-                    countryCode="RU"
-                    supportedNetworks={['visa', 'mastercard']}
-                    merchantCapabilities={['3ds']}
-                    onSuccess={handleApplePaySuccess}
-                    onError={handleApplePayError}
-                    onCancel={handleApplePayCancel}
-                    disabled={loading}
-                    style={styles.applePayButton}
-                  />
-                </View> */}
+
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => router.navigate('/ApplePayDebugExample')}
+                >
+                  <Text style={styles.buttonText}>Debug Apple Pay</Text>
+                </TouchableOpacity>
               </View>
             )}
           </ScrollView>

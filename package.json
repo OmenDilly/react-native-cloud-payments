@@ -1,6 +1,6 @@
 {
   "name": "@omendilly/react-native-cloud-payments",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "cloud payments sdk for react native made with nitro modules",
   "main": "lib/index",
   "module": "lib/index",

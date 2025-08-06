@@ -73,12 +73,20 @@ class HybridCloudPayments: HybridCloudPaymentsSpec {
                 ])
             }
 
+            print("CloudPayments: Starting Apple Pay payment request")
+            print("CloudPayments: Merchant ID: \(params.merchantId)")
+            print("CloudPayments: Amount: \(params.amount)")
+            print("CloudPayments: Currency: \(params.currency)")
+
             // Check if Apple Pay is available
             guard await PKPaymentAuthorizationViewController.canMakePayments() else {
+                print("CloudPayments: Apple Pay is not available on this device")
                 return ApplePayResult(success: false, cryptogram: nil, error: "Apple Pay is not available on this device")
             }
 
-            // Create payment request (regular or recurring based on params)
+            print("CloudPayments: Apple Pay is available on this device")
+
+            // Create payment request
             let request = PKPaymentRequest()
             request.merchantIdentifier = params.merchantId
             request.supportedNetworks = self.parseSupportedNetworks(params.supportedNetworks)
@@ -86,8 +94,12 @@ class HybridCloudPayments: HybridCloudPaymentsSpec {
             request.countryCode = params.countryCode ?? "RU"
             request.currencyCode = params.currency
 
-                        // Handle recurring payments for subscriptions
-            // TODO: Add subscription support in future version
+            print("CloudPayments: Payment request configured:")
+            print("CloudPayments: - Merchant ID: \(request.merchantIdentifier ?? "nil")")
+            print("CloudPayments: - Supported Networks: \(request.supportedNetworks)")
+            print("CloudPayments: - Merchant Capabilities: \(request.merchantCapabilities)")
+            print("CloudPayments: - Country Code: \(request.countryCode)")
+            print("CloudPayments: - Currency Code: \(request.currencyCode)")
 
             // Create payment summary items
             let paymentItem = PKPaymentSummaryItem(
@@ -96,13 +108,25 @@ class HybridCloudPayments: HybridCloudPaymentsSpec {
             )
             request.paymentSummaryItems = [paymentItem]
 
+            // print("CloudPayments: Payment summary items: \(request.paymentSummaryItems)")
+
+            // Validate payment request
+            guard PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: request.supportedNetworks) else {
+                print("CloudPayments: Cannot make payments with specified networks")
+                return ApplePayResult(success: false, cryptogram: nil, error: "Cannot make payments with specified networks")
+            }
+
             // Create and present Apple Pay controller
             guard let applePayController = await PKPaymentAuthorizationViewController(paymentRequest: request) else {
+                print("CloudPayments: Failed to create Apple Pay controller")
                 return ApplePayResult(success: false, cryptogram: nil, error: "Failed to create Apple Pay controller")
             }
 
+            print("CloudPayments: Apple Pay controller created successfully")
+
             // Create delegate with proper completion handling
             let delegate = ApplePayDelegate { [weak self] result in
+                print("CloudPayments: Apple Pay delegate completion called")
                 // Clear the strong reference after completion
                 self?.currentApplePayDelegate = nil
                 return result
@@ -118,13 +142,17 @@ class HybridCloudPayments: HybridCloudPaymentsSpec {
 
             // Get the top view controller to present from
             guard let topViewController = self.getTopViewController() else {
+                print("CloudPayments: No view controller available to present Apple Pay")
                 return ApplePayResult(success: false, cryptogram: nil, error: "No view controller available to present Apple Pay")
             }
 
+            print("CloudPayments: Presenting Apple Pay controller")
             await topViewController.present(applePayController, animated: true)
 
             // Wait for the delegate to complete using async/await
-            return await delegate.waitForCompletion()
+            let result = await delegate.waitForCompletion()
+            print("CloudPayments: Apple Pay payment completed with result: \(result.success)")
+            return result
         }
     }
 
@@ -220,6 +248,8 @@ class ApplePayDelegate: NSObject, PKPaymentAuthorizationViewControllerDelegate {
 
     func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, completion: @escaping (PKPaymentAuthorizationStatus) -> Void) {
         print("CloudPayments: Apple Pay payment authorized")
+        print("CloudPayments: Payment token: \(payment.token)")
+        print("CloudPayments: Payment method: \(payment.token.paymentMethod)")
 
         // Convert PKPayment to cryptogram string (as per point 5 in documentation)
         guard let cryptogram = payment.convertToString() else {
@@ -264,6 +294,7 @@ class ApplePayDelegate: NSObject, PKPaymentAuthorizationViewControllerDelegate {
 
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
         print("CloudPayments: Apple Pay controller did finish")
+        print("CloudPayments: Current result - success: \(result.success), error: \(result.error ?? "nil")")
 
         // Handle cancellation or completion
         if result.success == false && result.error == "Payment not completed" {
@@ -273,6 +304,7 @@ class ApplePayDelegate: NSObject, PKPaymentAuthorizationViewControllerDelegate {
 
         // Mark as completed
         isCompleted = true
+        print("CloudPayments: Apple Pay delegate marked as completed")
 
         // Let the system handle the dismissal
         controller.dismiss(animated: true)
