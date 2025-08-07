@@ -54,7 +54,7 @@ abstract class HybridCloudPaymentsSpec: HybridObject() {
   
   @DoNotStrip
   @Keep
-  abstract fun isApplePayAvailableWithNetworks(networks: Array<String>?): Promise<Boolean>
+  abstract fun isApplePayAvailableWithNetworks(networks: Array<StringHolder>?): Promise<Boolean>
   
   @DoNotStrip
   @Keep

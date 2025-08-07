@@ -12,6 +12,8 @@
 namespace margelo::nitro::cloudpayments { struct ApplePayResult; }
 // Forward declaration of `HybridCloudPaymentsSpec` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { class HybridCloudPaymentsSpec; }
+// Forward declaration of `StringHolder` to properly resolve imports.
+namespace margelo::nitro::cloudpayments { struct StringHolder; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridCloudPaymentsSpec_cxx` to properly resolve imports.
@@ -20,6 +22,7 @@ namespace NitroCloudPayments { class HybridCloudPaymentsSpec_cxx; }
 // Include C++ defined types
 #include "ApplePayResult.hpp"
 #include "HybridCloudPaymentsSpec.hpp"
+#include "StringHolder.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/PromiseHolder.hpp>
 #include <NitroModules/Result.hpp>
@@ -126,24 +129,24 @@ namespace margelo::nitro::cloudpayments::bridge::swift {
     return Func_void_std__string_Wrapper(std::move(value));
   }
   
-  // pragma MARK: std::vector<std::string>
+  // pragma MARK: std::vector<StringHolder>
   /**
-   * Specialized version of `std::vector<std::string>`.
+   * Specialized version of `std::vector<StringHolder>`.
    */
-  using std__vector_std__string_ = std::vector<std::string>;
-  inline std::vector<std::string> create_std__vector_std__string_(size_t size) {
-    std::vector<std::string> vector;
+  using std__vector_StringHolder_ = std::vector<StringHolder>;
+  inline std::vector<StringHolder> create_std__vector_StringHolder_(size_t size) {
+    std::vector<StringHolder> vector;
     vector.reserve(size);
     return vector;
   }
   
-  // pragma MARK: std::optional<std::vector<std::string>>
+  // pragma MARK: std::optional<std::vector<StringHolder>>
   /**
-   * Specialized version of `std::optional<std::vector<std::string>>`.
+   * Specialized version of `std::optional<std::vector<StringHolder>>`.
    */
-  using std__optional_std__vector_std__string__ = std::optional<std::vector<std::string>>;
-  inline std::optional<std::vector<std::string>> create_std__optional_std__vector_std__string__(const std::vector<std::string>& value) {
-    return std::optional<std::vector<std::string>>(value);
+  using std__optional_std__vector_StringHolder__ = std::optional<std::vector<StringHolder>>;
+  inline std::optional<std::vector<StringHolder>> create_std__optional_std__vector_StringHolder__(const std::vector<StringHolder>& value) {
+    return std::optional<std::vector<StringHolder>>(value);
   }
   
   // pragma MARK: std::optional<std::string>

@@ -12,8 +12,8 @@ export default function ApplePayExample() {
     try {
       const isAvailable =
         await CloudPaymentsModule.isApplePayAvailableWithNetworks([
-          'visa',
-          'mastercard',
+          { value: 'visa' },
+          { value: 'mastercard' },
         ])
       Alert.alert(
         'Apple Pay Availability',
@@ -87,8 +87,8 @@ export default function ApplePayExample() {
           currency="RUB"
           description="Test payment for CloudPayments SDK"
           countryCode="RU"
-          supportedNetworks={['visa', 'mastercard']}
-          merchantCapabilities={['3ds']}
+          supportedNetworks={[{ value: 'visa' }, { value: 'mastercard' }]}
+          merchantCapabilities={[{ value: '3ds' }]}
           onSuccess={handleApplePaySuccess}
           onError={handleApplePayError}
           onCancel={handleApplePayCancel}

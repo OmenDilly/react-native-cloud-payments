@@ -58,7 +58,7 @@ class HybridCloudPayments: HybridCloudPaymentsSpec {
         }
     }
 
-    func isApplePayAvailableWithNetworks(networks: [String]?) throws -> Promise<Bool> {
+    func isApplePayAvailableWithNetworks(networks: [StringHolder]?) throws -> Promise<Bool> {
         return Promise.async {
             let paymentNetworks = self.parseSupportedNetworks(networks)
             return await PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks)
@@ -156,12 +156,12 @@ class HybridCloudPayments: HybridCloudPaymentsSpec {
         }
     }
 
-    private func parseSupportedNetworks(_ networks: [String]?) -> [PKPaymentNetwork] {
+    private func parseSupportedNetworks(_ networks: [StringHolder]?) -> [PKPaymentNetwork] {
         let defaultNetworks: [PKPaymentNetwork] = [.visa, .masterCard]
         guard let networks = networks else { return defaultNetworks }
 
         return networks.compactMap { network in
-            switch network.lowercased() {
+            switch network.value.lowercased() {
             case "visa": return .visa
             case "mastercard": return .masterCard
             case "amex": return .amex
@@ -187,14 +187,14 @@ class HybridCloudPayments: HybridCloudPaymentsSpec {
         }
     }
 
-    private func parseMerchantCapabilities(_ capabilities: [String]?) -> PKMerchantCapability {
+    private func parseMerchantCapabilities(_ capabilities: [StringHolder]?) -> PKMerchantCapability {
         let defaultCapabilities: PKMerchantCapability = .capability3DS
         guard let capabilities = capabilities else { return defaultCapabilities }
 
         var result: PKMerchantCapability = []
 
         for capability in capabilities {
-            switch capability.lowercased() {
+            switch capability.value.lowercased() {
             case "3ds": result.insert(.capability3DS)
             case "emv": result.insert(.capabilityEMV)
             case "credit": result.insert(.capabilityCredit)

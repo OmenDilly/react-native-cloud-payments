@@ -1,5 +1,10 @@
 import type { HybridObject } from 'react-native-nitro-modules'
 
+// this is a temporary workaround for Swift Compiler issue https://github.com/mrousavy/nitro/issues/459
+export interface StringHolder {
+  value: string
+}
+
 export type ChargeStatus = 'Completed' | 'Authorized' | 'Declined' | 'ThreeDS'
 
 export interface CloudPayments
@@ -12,7 +17,7 @@ export interface CloudPayments
   generateCardCryptogram(params: CardCryptogramParams): Promise<string>
   // Apple Pay methods
   isApplePayAvailable(): Promise<boolean>
-  isApplePayAvailableWithNetworks(networks?: string[]): Promise<boolean>
+  isApplePayAvailableWithNetworks(networks?: StringHolder[]): Promise<boolean>
   requestApplePayPayment(params: ApplePayParams): Promise<ApplePayResult>
 }
 
@@ -28,8 +33,8 @@ export interface ApplePayParams {
   currency: string
   description: string
   countryCode?: string
-  supportedNetworks?: string[]
-  merchantCapabilities?: string[]
+  supportedNetworks?: StringHolder[]
+  merchantCapabilities?: StringHolder[]
 }
 
 export interface ApplePayResult {

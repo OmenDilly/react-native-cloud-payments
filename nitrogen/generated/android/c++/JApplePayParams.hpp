@@ -10,6 +10,8 @@
 #include <fbjni/fbjni.h>
 #include "ApplePayParams.hpp"
 
+#include "JStringHolder.hpp"
+#include "StringHolder.hpp"
 #include <optional>
 #include <string>
 #include <vector>
@@ -43,10 +45,10 @@ namespace margelo::nitro::cloudpayments {
       jni::local_ref<jni::JString> description = this->getFieldValue(fieldDescription);
       static const auto fieldCountryCode = clazz->getField<jni::JString>("countryCode");
       jni::local_ref<jni::JString> countryCode = this->getFieldValue(fieldCountryCode);
-      static const auto fieldSupportedNetworks = clazz->getField<jni::JArrayClass<jni::JString>>("supportedNetworks");
-      jni::local_ref<jni::JArrayClass<jni::JString>> supportedNetworks = this->getFieldValue(fieldSupportedNetworks);
-      static const auto fieldMerchantCapabilities = clazz->getField<jni::JArrayClass<jni::JString>>("merchantCapabilities");
-      jni::local_ref<jni::JArrayClass<jni::JString>> merchantCapabilities = this->getFieldValue(fieldMerchantCapabilities);
+      static const auto fieldSupportedNetworks = clazz->getField<jni::JArrayClass<JStringHolder>>("supportedNetworks");
+      jni::local_ref<jni::JArrayClass<JStringHolder>> supportedNetworks = this->getFieldValue(fieldSupportedNetworks);
+      static const auto fieldMerchantCapabilities = clazz->getField<jni::JArrayClass<JStringHolder>>("merchantCapabilities");
+      jni::local_ref<jni::JArrayClass<JStringHolder>> merchantCapabilities = this->getFieldValue(fieldMerchantCapabilities);
       return ApplePayParams(
         merchantId->toStdString(),
         amount,
@@ -55,21 +57,21 @@ namespace margelo::nitro::cloudpayments {
         countryCode != nullptr ? std::make_optional(countryCode->toStdString()) : std::nullopt,
         supportedNetworks != nullptr ? std::make_optional([&]() {
           size_t __size = supportedNetworks->size();
-          std::vector<std::string> __vector;
+          std::vector<StringHolder> __vector;
           __vector.reserve(__size);
           for (size_t __i = 0; __i < __size; __i++) {
             auto __element = supportedNetworks->getElement(__i);
-            __vector.push_back(__element->toStdString());
+            __vector.push_back(__element->toCpp());
           }
           return __vector;
         }()) : std::nullopt,
         merchantCapabilities != nullptr ? std::make_optional([&]() {
           size_t __size = merchantCapabilities->size();
-          std::vector<std::string> __vector;
+          std::vector<StringHolder> __vector;
           __vector.reserve(__size);
           for (size_t __i = 0; __i < __size; __i++) {
             auto __element = merchantCapabilities->getElement(__i);
-            __vector.push_back(__element->toStdString());
+            __vector.push_back(__element->toCpp());
           }
           return __vector;
         }()) : std::nullopt
@@ -90,19 +92,19 @@ namespace margelo::nitro::cloudpayments {
         value.countryCode.has_value() ? jni::make_jstring(value.countryCode.value()) : nullptr,
         value.supportedNetworks.has_value() ? [&]() {
           size_t __size = value.supportedNetworks.value().size();
-          jni::local_ref<jni::JArrayClass<jni::JString>> __array = jni::JArrayClass<jni::JString>::newArray(__size);
+          jni::local_ref<jni::JArrayClass<JStringHolder>> __array = jni::JArrayClass<JStringHolder>::newArray(__size);
           for (size_t __i = 0; __i < __size; __i++) {
             const auto& __element = value.supportedNetworks.value()[__i];
-            __array->setElement(__i, *jni::make_jstring(__element));
+            __array->setElement(__i, *JStringHolder::fromCpp(__element));
           }
           return __array;
         }() : nullptr,
         value.merchantCapabilities.has_value() ? [&]() {
           size_t __size = value.merchantCapabilities.value().size();
-          jni::local_ref<jni::JArrayClass<jni::JString>> __array = jni::JArrayClass<jni::JString>::newArray(__size);
+          jni::local_ref<jni::JArrayClass<JStringHolder>> __array = jni::JArrayClass<JStringHolder>::newArray(__size);
           for (size_t __i = 0; __i < __size; __i++) {
             const auto& __element = value.merchantCapabilities.value()[__i];
-            __array->setElement(__i, *jni::make_jstring(__element));
+            __array->setElement(__i, *JStringHolder::fromCpp(__element));
           }
           return __array;
         }() : nullptr

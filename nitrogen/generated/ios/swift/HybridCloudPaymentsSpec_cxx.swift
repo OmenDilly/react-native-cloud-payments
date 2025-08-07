@@ -158,11 +158,11 @@ public class HybridCloudPaymentsSpec_cxx {
   }
   
   @inline(__always)
-  public final func isApplePayAvailableWithNetworks(networks: bridge.std__optional_std__vector_std__string__) -> bridge.Result_std__shared_ptr_Promise_bool___ {
+  public final func isApplePayAvailableWithNetworks(networks: bridge.std__optional_std__vector_StringHolder__) -> bridge.Result_std__shared_ptr_Promise_bool___ {
     do {
-      let __result = try self.__implementation.isApplePayAvailableWithNetworks(networks: { () -> [String]? in
+      let __result = try self.__implementation.isApplePayAvailableWithNetworks(networks: { () -> [StringHolder]? in
         if let __unwrapped = networks.value {
-          return __unwrapped.map({ __item in String(__item) })
+          return __unwrapped.map({ __item in __item })
         } else {
           return nil
         }

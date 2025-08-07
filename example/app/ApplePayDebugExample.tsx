@@ -28,8 +28,8 @@ export default function ApplePayDebugExample() {
     try {
       const isAvailable =
         await CloudPaymentsModule.isApplePayAvailableWithNetworks([
-          'visa',
-          'mastercard',
+          { value: 'visa' },
+          { value: 'mastercard' },
         ])
       addLog(`Apple Pay available: ${isAvailable}`)
       Alert.alert(
@@ -111,8 +111,11 @@ export default function ApplePayDebugExample() {
                   currency: 'RUB',
                   description: 'Debug test payment',
                   countryCode: 'RU',
-                  supportedNetworks: ['visa', 'mastercard'],
-                  merchantCapabilities: ['3ds'],
+                  supportedNetworks: [
+                    { value: 'visa' },
+                    { value: 'mastercard' },
+                  ],
+                  merchantCapabilities: [{ value: '3ds' }],
                 }
 
                 addLog(`Using merchant ID: ${params.merchantId}`)

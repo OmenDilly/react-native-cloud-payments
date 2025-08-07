@@ -11,6 +11,8 @@
 namespace margelo::nitro::cloudpayments { struct ApplePayResult; }
 // Forward declaration of `CardCryptogramParams` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { struct CardCryptogramParams; }
+// Forward declaration of `StringHolder` to properly resolve imports.
+namespace margelo::nitro::cloudpayments { struct StringHolder; }
 // Forward declaration of `ApplePayParams` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { struct ApplePayParams; }
 
@@ -23,6 +25,8 @@ namespace margelo::nitro::cloudpayments { struct ApplePayParams; }
 #include "CardCryptogramParams.hpp"
 #include "JCardCryptogramParams.hpp"
 #include <vector>
+#include "StringHolder.hpp"
+#include "JStringHolder.hpp"
 #include "ApplePayParams.hpp"
 #include "JApplePayParams.hpp"
 
@@ -95,14 +99,14 @@ namespace margelo::nitro::cloudpayments {
       return __promise;
     }();
   }
-  std::shared_ptr<Promise<bool>> JHybridCloudPaymentsSpec::isApplePayAvailableWithNetworks(const std::optional<std::vector<std::string>>& networks) {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JArrayClass<jni::JString>> /* networks */)>("isApplePayAvailableWithNetworks");
+  std::shared_ptr<Promise<bool>> JHybridCloudPaymentsSpec::isApplePayAvailableWithNetworks(const std::optional<std::vector<StringHolder>>& networks) {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JArrayClass<JStringHolder>> /* networks */)>("isApplePayAvailableWithNetworks");
     auto __result = method(_javaPart, networks.has_value() ? [&]() {
       size_t __size = networks.value().size();
-      jni::local_ref<jni::JArrayClass<jni::JString>> __array = jni::JArrayClass<jni::JString>::newArray(__size);
+      jni::local_ref<jni::JArrayClass<JStringHolder>> __array = jni::JArrayClass<JStringHolder>::newArray(__size);
       for (size_t __i = 0; __i < __size; __i++) {
         const auto& __element = networks.value()[__i];
-        __array->setElement(__i, *jni::make_jstring(__element));
+        __array->setElement(__i, *JStringHolder::fromCpp(__element));
       }
       return __array;
     }() : nullptr);

@@ -15,6 +15,8 @@
 
 // Forward declaration of `CardCryptogramParams` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { struct CardCryptogramParams; }
+// Forward declaration of `StringHolder` to properly resolve imports.
+namespace margelo::nitro::cloudpayments { struct StringHolder; }
 // Forward declaration of `ApplePayResult` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { struct ApplePayResult; }
 // Forward declaration of `ApplePayParams` to properly resolve imports.
@@ -25,6 +27,7 @@ namespace margelo::nitro::cloudpayments { struct ApplePayParams; }
 #include "CardCryptogramParams.hpp"
 #include <optional>
 #include <vector>
+#include "StringHolder.hpp"
 #include "ApplePayResult.hpp"
 #include "ApplePayParams.hpp"
 
@@ -62,7 +65,7 @@ namespace margelo::nitro::cloudpayments {
       virtual std::shared_ptr<Promise<bool>> initialize(const std::string& publicId, const std::string& publicKey, double keyVersion) = 0;
       virtual std::shared_ptr<Promise<std::string>> generateCardCryptogram(const CardCryptogramParams& params) = 0;
       virtual std::shared_ptr<Promise<bool>> isApplePayAvailable() = 0;
-      virtual std::shared_ptr<Promise<bool>> isApplePayAvailableWithNetworks(const std::optional<std::vector<std::string>>& networks) = 0;
+      virtual std::shared_ptr<Promise<bool>> isApplePayAvailableWithNetworks(const std::optional<std::vector<StringHolder>>& networks) = 0;
       virtual std::shared_ptr<Promise<ApplePayResult>> requestApplePayPayment(const ApplePayParams& params) = 0;
 
     protected:

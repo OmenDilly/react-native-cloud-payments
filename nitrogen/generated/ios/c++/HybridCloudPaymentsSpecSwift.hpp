@@ -14,6 +14,8 @@ namespace NitroCloudPayments { class HybridCloudPaymentsSpec_cxx; }
 
 // Forward declaration of `CardCryptogramParams` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { struct CardCryptogramParams; }
+// Forward declaration of `StringHolder` to properly resolve imports.
+namespace margelo::nitro::cloudpayments { struct StringHolder; }
 // Forward declaration of `ApplePayResult` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { struct ApplePayResult; }
 // Forward declaration of `ApplePayParams` to properly resolve imports.
@@ -24,6 +26,7 @@ namespace margelo::nitro::cloudpayments { struct ApplePayParams; }
 #include "CardCryptogramParams.hpp"
 #include <optional>
 #include <vector>
+#include "StringHolder.hpp"
 #include "ApplePayResult.hpp"
 #include "ApplePayParams.hpp"
 
@@ -90,7 +93,7 @@ namespace margelo::nitro::cloudpayments {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline std::shared_ptr<Promise<bool>> isApplePayAvailableWithNetworks(const std::optional<std::vector<std::string>>& networks) override {
+    inline std::shared_ptr<Promise<bool>> isApplePayAvailableWithNetworks(const std::optional<std::vector<StringHolder>>& networks) override {
       auto __result = _swiftPart.isApplePayAvailableWithNetworks(networks);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());

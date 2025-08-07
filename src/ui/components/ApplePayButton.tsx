@@ -5,6 +5,7 @@ import {
   type ApplePayResult,
   CloudPaymentsModule,
 } from '../../index'
+import type { StringHolder } from '../../specs/CloudPayments.nitro'
 
 export interface ApplePayButtonProps {
   merchantId: string
@@ -12,8 +13,8 @@ export interface ApplePayButtonProps {
   currency: string
   description: string
   countryCode?: string
-  supportedNetworks?: string[]
-  merchantCapabilities?: string[]
+  supportedNetworks?: StringHolder[]
+  merchantCapabilities?: StringHolder[]
   onSuccess?: (result: ApplePayResult) => void
   onError?: (error: string) => void
   onCancel?: () => void
@@ -28,8 +29,8 @@ const ApplePayButton: React.FC<ApplePayButtonProps> = ({
   currency,
   description,
   countryCode = 'RU',
-  supportedNetworks = ['visa', 'mastercard'],
-  merchantCapabilities = ['3ds'],
+  supportedNetworks = [{ value: 'visa' }, { value: 'mastercard' }],
+  merchantCapabilities = [{ value: '3ds' }],
   onSuccess,
   onError,
   onCancel,

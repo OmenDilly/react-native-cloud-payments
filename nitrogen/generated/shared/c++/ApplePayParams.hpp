@@ -18,11 +18,13 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-
+// Forward declaration of `StringHolder` to properly resolve imports.
+namespace margelo::nitro::cloudpayments { struct StringHolder; }
 
 #include <string>
 #include <optional>
 #include <vector>
+#include "StringHolder.hpp"
 
 namespace margelo::nitro::cloudpayments {
 
@@ -36,12 +38,12 @@ namespace margelo::nitro::cloudpayments {
     std::string currency     SWIFT_PRIVATE;
     std::string description     SWIFT_PRIVATE;
     std::optional<std::string> countryCode     SWIFT_PRIVATE;
-    std::optional<std::vector<std::string>> supportedNetworks     SWIFT_PRIVATE;
-    std::optional<std::vector<std::string>> merchantCapabilities     SWIFT_PRIVATE;
+    std::optional<std::vector<StringHolder>> supportedNetworks     SWIFT_PRIVATE;
+    std::optional<std::vector<StringHolder>> merchantCapabilities     SWIFT_PRIVATE;
 
   public:
     ApplePayParams() = default;
-    explicit ApplePayParams(std::string merchantId, double amount, std::string currency, std::string description, std::optional<std::string> countryCode, std::optional<std::vector<std::string>> supportedNetworks, std::optional<std::vector<std::string>> merchantCapabilities): merchantId(merchantId), amount(amount), currency(currency), description(description), countryCode(countryCode), supportedNetworks(supportedNetworks), merchantCapabilities(merchantCapabilities) {}
+    explicit ApplePayParams(std::string merchantId, double amount, std::string currency, std::string description, std::optional<std::string> countryCode, std::optional<std::vector<StringHolder>> supportedNetworks, std::optional<std::vector<StringHolder>> merchantCapabilities): merchantId(merchantId), amount(amount), currency(currency), description(description), countryCode(countryCode), supportedNetworks(supportedNetworks), merchantCapabilities(merchantCapabilities) {}
   };
 
 } // namespace margelo::nitro::cloudpayments
@@ -61,8 +63,8 @@ namespace margelo::nitro {
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, "currency")),
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, "description")),
         JSIConverter<std::optional<std::string>>::fromJSI(runtime, obj.getProperty(runtime, "countryCode")),
-        JSIConverter<std::optional<std::vector<std::string>>>::fromJSI(runtime, obj.getProperty(runtime, "supportedNetworks")),
-        JSIConverter<std::optional<std::vector<std::string>>>::fromJSI(runtime, obj.getProperty(runtime, "merchantCapabilities"))
+        JSIConverter<std::optional<std::vector<StringHolder>>>::fromJSI(runtime, obj.getProperty(runtime, "supportedNetworks")),
+        JSIConverter<std::optional<std::vector<StringHolder>>>::fromJSI(runtime, obj.getProperty(runtime, "merchantCapabilities"))
       );
     }
     static inline jsi::Value toJSI(jsi::Runtime& runtime, const ApplePayParams& arg) {
@@ -72,8 +74,8 @@ namespace margelo::nitro {
       obj.setProperty(runtime, "currency", JSIConverter<std::string>::toJSI(runtime, arg.currency));
       obj.setProperty(runtime, "description", JSIConverter<std::string>::toJSI(runtime, arg.description));
       obj.setProperty(runtime, "countryCode", JSIConverter<std::optional<std::string>>::toJSI(runtime, arg.countryCode));
-      obj.setProperty(runtime, "supportedNetworks", JSIConverter<std::optional<std::vector<std::string>>>::toJSI(runtime, arg.supportedNetworks));
-      obj.setProperty(runtime, "merchantCapabilities", JSIConverter<std::optional<std::vector<std::string>>>::toJSI(runtime, arg.merchantCapabilities));
+      obj.setProperty(runtime, "supportedNetworks", JSIConverter<std::optional<std::vector<StringHolder>>>::toJSI(runtime, arg.supportedNetworks));
+      obj.setProperty(runtime, "merchantCapabilities", JSIConverter<std::optional<std::vector<StringHolder>>>::toJSI(runtime, arg.merchantCapabilities));
       return obj;
     }
     static inline bool canConvert(jsi::Runtime& runtime, const jsi::Value& value) {
@@ -86,8 +88,8 @@ namespace margelo::nitro {
       if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, "currency"))) return false;
       if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, "description"))) return false;
       if (!JSIConverter<std::optional<std::string>>::canConvert(runtime, obj.getProperty(runtime, "countryCode"))) return false;
-      if (!JSIConverter<std::optional<std::vector<std::string>>>::canConvert(runtime, obj.getProperty(runtime, "supportedNetworks"))) return false;
-      if (!JSIConverter<std::optional<std::vector<std::string>>>::canConvert(runtime, obj.getProperty(runtime, "merchantCapabilities"))) return false;
+      if (!JSIConverter<std::optional<std::vector<StringHolder>>>::canConvert(runtime, obj.getProperty(runtime, "supportedNetworks"))) return false;
+      if (!JSIConverter<std::optional<std::vector<StringHolder>>>::canConvert(runtime, obj.getProperty(runtime, "merchantCapabilities"))) return false;
       return true;
     }
   };

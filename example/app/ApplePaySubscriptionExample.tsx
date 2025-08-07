@@ -72,8 +72,8 @@ export default function ApplePaySubscriptionExample() {
           currency="RUB"
           description="Monthly Premium Subscription"
           countryCode="RU"
-          supportedNetworks={['visa', 'mastercard']}
-          merchantCapabilities={['3ds']}
+          supportedNetworks={[{ value: 'visa' }, { value: 'mastercard' }]}
+          merchantCapabilities={[{ value: '3ds' }]}
           recurringPayment={{
             description: 'Premium subscription with unlimited access',
             regularBilling: {
@@ -105,8 +105,8 @@ export default function ApplePaySubscriptionExample() {
           currency="RUB"
           description="Annual Premium Subscription"
           countryCode="RU"
-          supportedNetworks={['visa', 'mastercard']}
-          merchantCapabilities={['3ds']}
+          supportedNetworks={[{ value: 'visa' }, { value: 'mastercard' }]}
+          merchantCapabilities={[{ value: '3ds' }]}
           recurringPayment={{
             description: 'Annual Premium subscription with 17% discount',
             regularBilling: {

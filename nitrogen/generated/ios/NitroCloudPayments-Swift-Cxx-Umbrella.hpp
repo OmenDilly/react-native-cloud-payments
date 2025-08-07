@@ -16,12 +16,15 @@ namespace margelo::nitro::cloudpayments { struct ApplePayResult; }
 namespace margelo::nitro::cloudpayments { struct CardCryptogramParams; }
 // Forward declaration of `HybridCloudPaymentsSpec` to properly resolve imports.
 namespace margelo::nitro::cloudpayments { class HybridCloudPaymentsSpec; }
+// Forward declaration of `StringHolder` to properly resolve imports.
+namespace margelo::nitro::cloudpayments { struct StringHolder; }
 
 // Include C++ defined types
 #include "ApplePayParams.hpp"
 #include "ApplePayResult.hpp"
 #include "CardCryptogramParams.hpp"
 #include "HybridCloudPaymentsSpec.hpp"
+#include "StringHolder.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>

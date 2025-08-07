@@ -18,31 +18,31 @@ public extension ApplePayParams {
   /**
    * Create a new instance of `ApplePayParams`.
    */
-  init(merchantId: String, amount: Double, currency: String, description: String, countryCode: String?, supportedNetworks: [String]?, merchantCapabilities: [String]?) {
+  init(merchantId: String, amount: Double, currency: String, description: String, countryCode: String?, supportedNetworks: [StringHolder]?, merchantCapabilities: [StringHolder]?) {
     self.init(std.string(merchantId), amount, std.string(currency), std.string(description), { () -> bridge.std__optional_std__string_ in
       if let __unwrappedValue = countryCode {
         return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
       } else {
         return .init()
       }
-    }(), { () -> bridge.std__optional_std__vector_std__string__ in
+    }(), { () -> bridge.std__optional_std__vector_StringHolder__ in
       if let __unwrappedValue = supportedNetworks {
-        return bridge.create_std__optional_std__vector_std__string__({ () -> bridge.std__vector_std__string_ in
-          var __vector = bridge.create_std__vector_std__string_(__unwrappedValue.count)
+        return bridge.create_std__optional_std__vector_StringHolder__({ () -> bridge.std__vector_StringHolder_ in
+          var __vector = bridge.create_std__vector_StringHolder_(__unwrappedValue.count)
           for __item in __unwrappedValue {
-            __vector.push_back(std.string(__item))
+            __vector.push_back(__item)
           }
           return __vector
         }())
       } else {
         return .init()
       }
-    }(), { () -> bridge.std__optional_std__vector_std__string__ in
+    }(), { () -> bridge.std__optional_std__vector_StringHolder__ in
       if let __unwrappedValue = merchantCapabilities {
-        return bridge.create_std__optional_std__vector_std__string__({ () -> bridge.std__vector_std__string_ in
-          var __vector = bridge.create_std__vector_std__string_(__unwrappedValue.count)
+        return bridge.create_std__optional_std__vector_StringHolder__({ () -> bridge.std__vector_StringHolder_ in
+          var __vector = bridge.create_std__vector_StringHolder_(__unwrappedValue.count)
           for __item in __unwrappedValue {
-            __vector.push_back(std.string(__item))
+            __vector.push_back(__item)
           }
           return __vector
         }())
@@ -119,12 +119,12 @@ public extension ApplePayParams {
     }
   }
   
-  var supportedNetworks: [String]? {
+  var supportedNetworks: [StringHolder]? {
     @inline(__always)
     get {
-      return { () -> [String]? in
+      return { () -> [StringHolder]? in
         if let __unwrapped = self.__supportedNetworks.value {
-          return __unwrapped.map({ __item in String(__item) })
+          return __unwrapped.map({ __item in __item })
         } else {
           return nil
         }
@@ -132,12 +132,12 @@ public extension ApplePayParams {
     }
     @inline(__always)
     set {
-      self.__supportedNetworks = { () -> bridge.std__optional_std__vector_std__string__ in
+      self.__supportedNetworks = { () -> bridge.std__optional_std__vector_StringHolder__ in
         if let __unwrappedValue = newValue {
-          return bridge.create_std__optional_std__vector_std__string__({ () -> bridge.std__vector_std__string_ in
-            var __vector = bridge.create_std__vector_std__string_(__unwrappedValue.count)
+          return bridge.create_std__optional_std__vector_StringHolder__({ () -> bridge.std__vector_StringHolder_ in
+            var __vector = bridge.create_std__vector_StringHolder_(__unwrappedValue.count)
             for __item in __unwrappedValue {
-              __vector.push_back(std.string(__item))
+              __vector.push_back(__item)
             }
             return __vector
           }())
@@ -148,12 +148,12 @@ public extension ApplePayParams {
     }
   }
   
-  var merchantCapabilities: [String]? {
+  var merchantCapabilities: [StringHolder]? {
     @inline(__always)
     get {
-      return { () -> [String]? in
+      return { () -> [StringHolder]? in
         if let __unwrapped = self.__merchantCapabilities.value {
-          return __unwrapped.map({ __item in String(__item) })
+          return __unwrapped.map({ __item in __item })
         } else {
           return nil
         }
@@ -161,12 +161,12 @@ public extension ApplePayParams {
     }
     @inline(__always)
     set {
-      self.__merchantCapabilities = { () -> bridge.std__optional_std__vector_std__string__ in
+      self.__merchantCapabilities = { () -> bridge.std__optional_std__vector_StringHolder__ in
         if let __unwrappedValue = newValue {
-          return bridge.create_std__optional_std__vector_std__string__({ () -> bridge.std__vector_std__string_ in
-            var __vector = bridge.create_std__vector_std__string_(__unwrappedValue.count)
+          return bridge.create_std__optional_std__vector_StringHolder__({ () -> bridge.std__vector_StringHolder_ in
+            var __vector = bridge.create_std__vector_StringHolder_(__unwrappedValue.count)
             for __item in __unwrappedValue {
-              __vector.push_back(std.string(__item))
+              __vector.push_back(__item)
             }
             return __vector
           }())
