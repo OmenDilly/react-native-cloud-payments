@@ -26,6 +26,8 @@ const config: ExpoConfig = {
     favicon: './assets/images/favicon.png',
   },
   plugins: [
+    './plugins/withRedirectScheme.js',
+    './plugins/withCloudPayments.js',
     'expo-router',
     [
       'expo-splash-screen',

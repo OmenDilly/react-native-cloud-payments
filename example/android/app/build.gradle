@@ -88,6 +88,7 @@ android {
 
     namespace 'com.omendilly.example'
     defaultConfig {
+        manifestPlaceholders = [YANDEX_CLIENT_ID: "Test"]
         applicationId 'com.omendilly.example'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
